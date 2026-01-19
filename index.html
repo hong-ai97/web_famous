@@ -125,6 +125,27 @@
             left: 0;
             will-change: transform;
         }
+
+        /* Marquee Animation */
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 1.5rem;
+            /* gap-6 equivalent */
+            width: max-content;
+            animation: marquee 60s linear infinite;
+            /* Slow speed */
+            will-change: transform;
+        }
     </style>
 </head>
 
@@ -138,9 +159,9 @@
             <a href="#" class="text-3xl font-black tracking-tighter font-poppins">FAMOUS</a>
 
             <nav class="hidden md:flex gap-10 font-bold text-sm uppercase tracking-wide">
-                <a href="#about" class="hover:opacity-60 transition-opacity">About</a>
-                <a href="#solution" class="hover:opacity-60 transition-opacity">Solution</a>
-                <a href="#creators" class="hover:opacity-60 transition-opacity">Creators</a>
+                <a href="#creators" class="hover:opacity-60 transition-opacity">CREATORS</a>
+                <a href="#" class="hover:opacity-60 transition-opacity">BLOG</a>
+                <a href="#contact" class="hover:opacity-60 transition-opacity">CONTACT</a>
             </nav>
 
             <a href="#contact"
@@ -187,15 +208,16 @@
                     <img src="./assets/images/triangle_3d.png" alt="Triangle 3D" class="w-full">
                 </div>
 
-                <!-- Obj 3 (Heart): Right 20px (70px - 20px = 50px total) -->
+                <!-- Obj 3 (Heart): Right 20px (70px - 20px = 50px total) -> Left 80px (50+80=130), Down 100px -->
                 <div class="hero-obj hover-float absolute" id="obj-heart"
-                    style="top: -6vw; right: calc(-8vw + 50px); width: 29vw; z-index: -1; transform: rotate(15deg); filter: drop-shadow(30px 30px 20px rgba(200, 50, 255, 0.3));">
-                    <img src="./assets/images/heart_3d.png" alt="Heart 3D" class="w-full">
+                    style="top: calc(-6vw + 100px); right: calc(-8vw + 130px); width: 23.2vw; z-index: -1; transform: rotate(15deg); filter: drop-shadow(30px 30px 20px rgba(200, 50, 255, 0.3));">
+                    <img src="./assets/images/heart_3d_new.png" alt="Heart 3D" class="w-full">
                 </div>
 
                 <!-- Obj 4 (Thumb): Size -3% (18.4vw), Down 160px (from -106px -> +54px) -->
+                <!-- Obj 4 (Thumb): Size -3% (18.4vw), Down 160px (from -106px -> +54px) -> Up 100px (54 - 100 = -46px) -->
                 <div class="hero-obj hover-float absolute" id="obj-thumb"
-                    style="top: calc(50% + 54px); right: calc(21vw - 230px); width: 18.4vw; z-index: -1; transform: translateY(-50%) rotate(0deg); filter: drop-shadow(30px 30px 20px rgba(255, 60, 0, 0.3));">
+                    style="top: calc(50% - 46px); right: calc(21vw - 230px); width: 18.4vw; z-index: -1; transform: translateY(-50%) rotate(0deg); filter: drop-shadow(30px 30px 20px rgba(255, 60, 0, 0.3));">
                     <img src="./assets/images/thumb_3d.png" alt="Thumb 3D" class="w-full">
                 </div>
             </div>
@@ -259,54 +281,85 @@
             <!-- [Bleed Layout Adjusted] 
                      Shift Left: margin-left: -78px (Less aggressive cut, shifted back 36px)
                 -->
-            <div class="w-[150vw] ml-[-78px] flex items-center justify-start mb-20 py-10 overflow-hidden gap-6 pl-0">
+            <!-- [Marquee Loop Layout] -->
+            <div class="w-full mb-20 overflow-hidden">
+                <div class="marquee-track py-10 pl-0">
+                    <!-- Set 1 -->
+                    <!-- 1. Circle -->
+                    <div class="img-strip-item w-[240px] h-[240px] rounded-full z-10">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=2820&auto=format&fit=crop"
+                            class="will-change-transform">
+                    </div>
+                    <!-- 2. Pill -->
+                    <div class="img-strip-item w-[540px] h-[240px] rounded-[120px] z-10">
+                        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=2820&auto=format&fit=crop&q=80"
+                            class="will-change-transform">
+                    </div>
+                    <!-- 3. Solid Circle (Yellow) -->
+                    <div
+                        class="img-strip-item w-[200px] h-[200px] rounded-full bg-[#FFCA28] z-10 flex items-center justify-center overflow-hidden">
+                    </div>
+                    <!-- 4. Circle -->
+                    <div class="img-strip-item w-[260px] h-[260px] rounded-full z-10">
+                        <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=2820&auto=format&fit=crop&q=80"
+                            class="will-change-transform">
+                    </div>
+                    <!-- 5. Pill -->
+                    <div class="img-strip-item w-[480px] h-[220px] rounded-[110px] z-10">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=2820&auto=format&fit=crop&q=80"
+                            class="will-change-transform">
+                    </div>
+                    <!-- 6. Solid Circle (Purple) -->
+                    <div
+                        class="img-strip-item w-[220px] h-[220px] rounded-full bg-[#A855F7] z-10 flex items-center justify-center overflow-hidden">
+                    </div>
+                    <!-- 7. Circle END -->
+                    <div class="img-strip-item w-[240px] h-[240px] rounded-full z-10 opacity-80">
+                        <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=2820&auto=format&fit=crop&q=80"
+                            class="will-change-transform">
+                    </div>
+                    <!-- 8. Pill (Deep Blue) -->
+                    <div class="img-strip-item w-[500px] h-[240px] rounded-[120px] bg-[#0047FF] z-10">
+                    </div>
 
-                <!-- 1. Circle (Cut off less) -->
-                <div class="img-strip-item w-[240px] h-[240px] rounded-full z-10">
-                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=2820&auto=format&fit=crop"
-                        class="will-change-transform">
+                    <!-- Set 2 (Cloned for Loop) -->
+                    <!-- 1. Circle -->
+                    <div class="img-strip-item w-[240px] h-[240px] rounded-full z-10">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=2820&auto=format&fit=crop"
+                            class="will-change-transform">
+                    </div>
+                    <!-- 2. Pill -->
+                    <div class="img-strip-item w-[540px] h-[240px] rounded-[120px] z-10">
+                        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=2820&auto=format&fit=crop&q=80"
+                            class="will-change-transform">
+                    </div>
+                    <!-- 3. Solid Circle (Yellow) -->
+                    <div
+                        class="img-strip-item w-[200px] h-[200px] rounded-full bg-[#FFCA28] z-10 flex items-center justify-center overflow-hidden">
+                    </div>
+                    <!-- 4. Circle -->
+                    <div class="img-strip-item w-[260px] h-[260px] rounded-full z-10">
+                        <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=2820&auto=format&fit=crop&q=80"
+                            class="will-change-transform">
+                    </div>
+                    <!-- 5. Pill -->
+                    <div class="img-strip-item w-[480px] h-[220px] rounded-[110px] z-10">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=2820&auto=format&fit=crop&q=80"
+                            class="will-change-transform">
+                    </div>
+                    <!-- 6. Solid Circle (Purple) -->
+                    <div
+                        class="img-strip-item w-[220px] h-[220px] rounded-full bg-[#A855F7] z-10 flex items-center justify-center overflow-hidden">
+                    </div>
+                    <!-- 7. Circle END -->
+                    <div class="img-strip-item w-[240px] h-[240px] rounded-full z-10 opacity-80">
+                        <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=2820&auto=format&fit=crop&q=80"
+                            class="will-change-transform">
+                    </div>
+                    <!-- 8. Pill (Deep Blue) -->
+                    <div class="img-strip-item w-[500px] h-[240px] rounded-[120px] bg-[#0047FF] z-10">
+                    </div>
                 </div>
-
-                <!-- 2. Pill (Wider 1.5x) -->
-                <div class="img-strip-item w-[540px] h-[240px] rounded-[120px] z-10">
-                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=2820&auto=format&fit=crop&q=80"
-                        class="will-change-transform">
-                </div>
-
-                <!-- 3. Solid Circle (Yellow) - EMPTY -->
-                <div
-                    class="img-strip-item w-[200px] h-[200px] rounded-full bg-[#FFCA28] z-10 flex items-center justify-center overflow-hidden">
-                    <!-- No IMG for Parallax here -->
-                </div>
-
-                <!-- 4. Circle -->
-                <div class="img-strip-item w-[260px] h-[260px] rounded-full z-10">
-                    <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=2820&auto=format&fit=crop&q=80"
-                        class="will-change-transform">
-                </div>
-
-                <!-- 5. Pill (Wider 1.5x) -->
-                <div class="img-strip-item w-[480px] h-[220px] rounded-[110px] z-10">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=2820&auto=format&fit=crop&q=80"
-                        class="will-change-transform">
-                </div>
-
-                <!-- 6. Solid Circle (Purple) - EMPTY -->
-                <div
-                    class="img-strip-item w-[220px] h-[220px] rounded-full bg-[#A855F7] z-10 flex items-center justify-center overflow-hidden">
-                </div>
-
-                <!-- 7. Circle (End) -->
-                <div class="img-strip-item w-[240px] h-[240px] rounded-full z-10 opacity-80">
-                    <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=2820&auto=format&fit=crop&q=80"
-                        class="will-change-transform">
-                </div>
-
-                <!-- 8. NEW: Pill (Deep Blue) - Bleed Right -->
-                <div class="img-strip-item w-[500px] h-[240px] rounded-[120px] bg-[#0047FF] z-10">
-                    <!-- Empty Deep Blue Pill -->
-                </div>
-
             </div>
 
             <div class="w-full flex justify-end pr-6 md:pr-[80px] relative z-20">
@@ -485,7 +538,7 @@
     </section>
 
     <!-- 5. TOP CREATORS (Spacing & Rounded Button) -->
-    <section id="creators" class="relative w-full h-[330vh] bg-white text-black">
+    <section id="creators" class="relative w-full h-[380vh] bg-white text-black">
         <div
             class="sticky top-0 left-0 w-full h-screen flex flex-col justify-center items-center z-10 pointer-events-none">
 
@@ -500,7 +553,7 @@
 
             <!-- Subtext <-> Button Margin: mt-12 (48px) & Rounded Full -->
             <a href="#"
-                class="mt-12 px-8 py-3 bg-transparent border border-black text-black font-bold uppercase hover:bg-[#FF4D00] hover:border-transparent hover:text-white transition-all duration-300 pointer-events-auto rounded-full">
+                class="mt-12 px-8 py-3 bg-black border border-black text-white font-bold uppercase hover:bg-[#FF4D00] hover:border-transparent hover:text-white transition-all duration-300 pointer-events-auto rounded-full">
                 View More
             </a>
         </div>
@@ -558,24 +611,24 @@
             <div
                 class="creator-reveal flex flex-col items-center absolute top-[220vh] left-[10%] md:left-[15%] w-[40vw] md:w-[22vw] opacity-0 scale-50 blur-sm">
                 <div class="w-full aspect-square rounded-full overflow-hidden shadow-2xl relative group">
-                    <img src="./assets/images/creator_5.png"
-                        class="w-full h-full object-cover rounded-full transition-transform duration-700 group-hover:scale-110">
-                </div>
-                <div class="mt-5 text-center">
-                    <h3 class="text-[15px] md:text-[18px] font-semibold text-[#222] mb-1">Anna Park</h3>
-                    <p class="text-[12px] md:text-[14px] text-[#888] tracking-wider">@anna_design</p>
-                </div>
-            </div>
-
-            <div
-                class="creator-reveal flex flex-col items-center absolute top-[260vh] right-[10%] md:right-[15%] w-[40vw] md:w-[22vw] opacity-0 scale-50 blur-sm">
-                <div class="w-full aspect-square rounded-full overflow-hidden shadow-2xl relative group">
                     <img src="./assets/images/creator_6.png"
                         class="w-full h-full object-cover rounded-full transition-transform duration-700 group-hover:scale-110">
                 </div>
                 <div class="mt-5 text-center">
                     <h3 class="text-[15px] md:text-[18px] font-semibold text-[#222] mb-1">Lisa Travel</h3>
                     <p class="text-[12px] md:text-[14px] text-[#888] tracking-wider">@lisa_travel</p>
+                </div>
+            </div>
+
+            <div
+                class="creator-reveal flex flex-col items-center absolute top-[260vh] right-[10%] md:right-[15%] w-[40vw] md:w-[22vw] opacity-0 scale-50 blur-sm">
+                <div class="w-full aspect-square rounded-full overflow-hidden shadow-2xl relative group">
+                    <img src="./assets/images/creator_5.png"
+                        class="w-full h-full object-cover rounded-full transition-transform duration-700 group-hover:scale-110">
+                </div>
+                <div class="mt-5 text-center">
+                    <h3 class="text-[15px] md:text-[18px] font-semibold text-[#222] mb-1">Anna Park</h3>
+                    <p class="text-[12px] md:text-[14px] text-[#888] tracking-wider">@anna_design</p>
                 </div>
             </div>
 
