@@ -228,7 +228,7 @@
 
 
             <!-- Scroll Down Indicator -->
-            <div class="absolute bottom-[40px] left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 pb-2 z-50">
+            <div id="scroll-down-indicator" class="absolute bottom-[40px] left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 pb-2 z-50">
                 <span class="text-sm font-semibold text-black tracking-wide">Scroll Down</span>
                 <div class="w-8 h-8 rounded-full border border-black flex items-center justify-center animate-bounce"
                     style="animation-duration: 2s;">
@@ -724,6 +724,7 @@
             .to("#obj-heart", { x: "250px", opacity: 0, duration: 1.5, ease: "power2.in" }, "split")
 
             .to("#hero-subtext", { opacity: 0, duration: 0.1 }, "split")
+            .to("#scroll-down-indicator", { y: 100, opacity: 0, duration: 1.0, ease: "power2.in" }, "split")
             .to("#hero-image-wrapper", {
                 clipPath: "circle(100% at 50% 50%)",
                 width: "100%",
