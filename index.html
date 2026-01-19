@@ -116,12 +116,12 @@
         /* Internal Parallax Image Style */
         .img-strip-item img {
             width: 100%;
-            height: 140%;
-            /* Increase height for parallax movement */
+            height: 100%;
+            /* Reset parallax height */
             object-fit: cover;
             position: absolute;
-            top: -20%;
-            /* Start slightly up so we can move down, or let GSAP handle set */
+            top: 0;
+            /* Reset parallax top */
             left: 0;
             will-change: transform;
         }
@@ -278,6 +278,12 @@
                 With FAMOUS.
             </h2>
 
+            <!-- New Button: Find Influencer -->
+            <a href="#"
+                class="inline-flex items-center gap-2 pl-6 md:pl-[80px] mb-16 text-[20px] font-bold text-black hover:text-[#FF4D00] transition-colors group">
+                인플루언서 찾기 <span class="transition-transform group-hover:translate-x-1">→</span>
+            </a>
+
             <!-- [Bleed Layout Adjusted] 
                      Shift Left: margin-left: -78px (Less aggressive cut, shifted back 36px)
                 -->
@@ -387,7 +393,7 @@
                     <h2 class="section-title leading-none mb-6">
                         SMART<br>WORK
                     </h2>
-                    <p class="text-lg text-gray-600 font-medium max-w-sm">
+                    <p class="text-[20px] text-gray-600 font-medium max-w-sm">
                         성공적인 중국 마케팅을 위한<br>
                         페이머스만의 독보적인 솔루션
                     </p>
@@ -399,45 +405,45 @@
 
                 <div
                     class="work-item group relative block mb-32 first:mt-0 w-full max-w-[925px] flex flex-col items-end">
-                    <div class="w-full aspect-video rounded-[32px] overflow-hidden mb-6">
+                    <div class="w-full aspect-video rounded-[32px] overflow-hidden mb-8">
                         <div class="parallax-inner w-full h-[150%] -mt-[15%] relative will-change-transform">
                             <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2940&auto=format&fit=crop"
                                 class="w-full h-full object-cover" alt="AI Matching">
                         </div>
                     </div>
-                    <div class="flex flex-col justify-between items-start w-full">
-                        <h3 class="text-2xl md:text-4xl font-bold mb-3">AI 정밀 매칭</h3>
-                        <p class="text-gray-500 font-medium leading-relaxed text-sm md:text-base mb-4">
+                    <div class="flex flex-col justify-between items-start w-full px-6">
+                        <h3 class="text-2xl md:text-[32px] font-bold mb-3">AI 정밀 매칭</h3>
+                        <p class="text-gray-500 font-medium leading-relaxed text-sm md:text-[18px] mb-4">
                             단순 팔로워 수가 아닌, 제품의 특징과 타겟 오디언스의 페르소나를 AI가 정밀 분석하여 브랜드에 가장 적합한 인플루언서를 매칭합니다.
                         </p>
                     </div>
                 </div>
 
                 <div class="work-item group relative block mb-32 w-full max-w-[925px] flex flex-col items-end">
-                    <div class="w-full aspect-video rounded-[32px] overflow-hidden mb-6">
+                    <div class="w-full aspect-video rounded-[32px] overflow-hidden mb-8">
                         <div class="parallax-inner w-full h-[150%] -mt-[15%] relative will-change-transform">
                             <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2940&auto=format&fit=crop"
                                 class="w-full h-full object-cover" alt="Automation">
                         </div>
                     </div>
-                    <div class="flex flex-col justify-between items-start w-full">
-                        <h3 class="text-2xl md:text-4xl font-bold mb-3">풀 프로세스 자동화</h3>
-                        <p class="text-gray-500 font-medium leading-relaxed text-sm md:text-base mb-4">
+                    <div class="flex flex-col justify-between items-start w-full px-6">
+                        <h3 class="text-2xl md:text-[32px] font-bold mb-3">풀 프로세스 자동화</h3>
+                        <p class="text-gray-500 font-medium leading-relaxed text-sm md:text-[18px] mb-4">
                             인플루언서 리스트업부터 섭외 요청, 원고 검수, 포스팅 확인까지 복잡한 마케팅 과정을 원스톱으로 자동화하여 업무 리소스를 혁신적으로 절감합니다.
                         </p>
                     </div>
                 </div>
 
                 <div class="work-item work-item-last group relative block w-full max-w-[925px] flex flex-col items-end">
-                    <div class="w-full aspect-video rounded-[32px] overflow-hidden mb-6">
+                    <div class="w-full aspect-video rounded-[32px] overflow-hidden mb-8">
                         <div class="parallax-inner w-full h-[150%] -mt-[15%] relative will-change-transform">
                             <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2940&auto=format&fit=crop"
                                 class="w-full h-full object-cover" alt="Dashboard">
                         </div>
                     </div>
-                    <div class="flex flex-col justify-between items-start w-full">
-                        <h3 class="text-2xl md:text-4xl font-bold mb-3">실시간 성과 대시보드</h3>
-                        <p class="text-gray-500 font-medium leading-relaxed text-sm md:text-base mb-4">
+                    <div class="flex flex-col justify-between items-start w-full px-6">
+                        <h3 class="text-2xl md:text-[32px] font-bold mb-3">실시간 성과 대시보드</h3>
+                        <p class="text-gray-500 font-medium leading-relaxed text-sm md:text-[18px] mb-4">
                             도우인, 샤오홍슈, 위챗 등 중국 주요 플랫폼의 캠페인 데이터를 실시간으로 수집하고 분석하여 투명하고 정확한 성과 리포트를 제공합니다.
                         </p>
                     </div>
@@ -547,14 +553,14 @@
                 TOP<br>CREATORS
             </h2>
 
-            <p class="text-xl md:text-2xl font-bold tracking-widest text-gray-500 uppercase">
-                Creating New Waves
+            <p class="text-[20px] font-semibold tracking-[0] text-gray-500 uppercase">
+                카테고리별 실시간 인기 파트너를 확인하세요.
             </p>
 
             <!-- Subtext <-> Button Margin: mt-12 (48px) & Rounded Full -->
             <a href="#"
-                class="mt-12 px-8 py-3 bg-black border border-black text-white font-bold uppercase hover:bg-[#FF4D00] hover:border-transparent hover:text-white transition-all duration-300 pointer-events-auto rounded-full">
-                View More
+                class="mt-12 px-10 py-5 bg-black text-white font-bold text-[18px] hover:bg-[#FF4D00] hover:text-white transition-all duration-300 pointer-events-auto rounded-full group transform hover:-translate-y-1">
+                View More <span class="ml-2 transition-transform group-hover:translate-x-1">→</span>
             </a>
         </div>
 
@@ -642,12 +648,13 @@
         class="w-full py-32 px-6 md:px-[80px] bg-[#111] text-white overflow-hidden relative border-b border-[#222]">
         <div class="w-full flex flex-col md:flex-row items-end justify-between relative z-10">
             <div class="w-full md:w-3/5 text-left">
-                <h2 class="section-title mb-8 leading-tight">
+                <h2 class="section-title mb-8 leading-[1.1]">
                     READY TO<br>BE FAMOUS?
                 </h2>
                 <p class="text-white/90 text-lg md:text-xl font-bold leading-relaxed max-w-xl">
-                    브랜드의 성장을 위한 최고의 파트너.<br>
-                    지금 바로 페이머스와 함께하세요.
+                    체험단부터 메가 인플루언서까지 단계별<br>
+                    맞춤형 마케팅 전략. 첫 캠페인 무료 컨설팅 제공.<br>
+                    지금 바로 중국 시장 도전을 시작하세요
                 </p>
             </div>
 
@@ -664,7 +671,7 @@
                     </div>
                 </div>
                 <a href="mailto:support@etribe.co.kr"
-                    class="inline-flex items-center justify-center bg-white text-black px-10 py-5 rounded-full font-black text-xl hover:bg-[#FF4D00] hover:text-white transition-all duration-300 shadow-xl transform hover:-translate-y-1">
+                    class="inline-flex items-center justify-center bg-white text-black px-10 py-5 rounded-full font-bold text-[18px] hover:bg-[#FF4D00] hover:text-white transition-all duration-300 shadow-xl transform hover:-translate-y-1">
                     프로젝트 문의하기 →
                 </a>
             </div>
@@ -796,22 +803,7 @@
 
 
         // --- 2.2 PARTNER STRIP PARALLAX ---
-        // Internal GSAP Parallax for images inside items
-        gsap.utils.toArray(".img-strip-item img").forEach(img => {
-            gsap.fromTo(img,
-                { y: "-15%" },
-                {
-                    y: "15%",
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: img.parentElement, // Trigger from the container (shape)
-                        start: "top bottom",        // When shape hits bottom of viewport
-                        end: "bottom top",          // When shape leaves top of viewport
-                        scrub: true
-                    }
-                }
-            );
-        });
+
 
 
         // --- 3. SMART WORK PINNING ---
