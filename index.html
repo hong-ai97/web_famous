@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Famous - Global Influencer Marketing Platform</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+    <!-- Paperlogy Font (ExtraBold 900) -->
+    <style>
+        @font-face {
+            font-family: 'Paperlogy-8ExtraBold';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/Paperlogy-8ExtraBold.woff2') format('woff2');
+            font-weight: 900;
+            font-style: normal;
+        }
+    </style>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Pretendard"', 'sans-serif'],
+                        display: ['"Paperlogy-8ExtraBold"', 'sans-serif'],
+                        poppins: ['"Poppins"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            black: '#111111',
+                            gray: '#333333',
+                            accent: '#FF4D00',
+                            purple: '#A855F7',
+                            yellow: '#FFCA28',
+                        }
+                    },
+                    maxWidth: {
+                        'screen-3xl': '1680px',
+                    },
+                    fontSize: {
+                        'title-lg': ['96px', '1'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <style>
+        body {
+            background-color: #ffffff;
+            color: #111111;
+            overflow-x: hidden;
+        }
+
+        .text-huge {
+            /* Increased size (1.2x) */
+            font-family: 'Paperlogy-8ExtraBold', sans-serif;
+            font-size: clamp(5.4rem, 15.6vw, 18rem);
+            line-height: 0.9;
+        }
+
+        /* Global Section Titles */
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 900;
+            font-size: clamp(3rem, 5vw, 96px);
+            /* Max 96px */
+            line-height: 1.0;
+            text-transform: uppercase;
+        }
+
+        /* Hide scrollbar for cleaner look */
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+
+        .creator-bubble {
+            will-change: transform;
+        }
+
+        .hero-obj {
+            position: absolute;
+            pointer-events: none;
+            filter: drop-shadow(20px 20px 25px rgba(0, 0, 0, 0.15));
+            will-change: transform;
+        }
+
+        /* New Styles for Image Strip & Parallax */
+        .img-strip-item {
+            position: relative;
+            flex-shrink: 0;
+            transition: transform 0.5s ease;
+            overflow: hidden;
+            /* Ensure mask */
+            /* Flex to center image if needed, but absolute is reliable */
+        }
+
+        .img-strip-item:hover {
+            z-index: 50;
+        }
+
+        /* Internal Parallax Image Style */
+        .img-strip-item img {
+            width: 100%;
+            height: 140%;
+            /* Increase height for parallax movement */
+            object-fit: cover;
+            position: absolute;
+            top: -20%;
+            /* Start slightly up so we can move down, or let GSAP handle set */
+            left: 0;
+            will-change: transform;
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased text-brand-black selection:bg-[#FF4D00] selection:text-white overflow-x-hidden">
+
+    <!-- Header (Fixed 80px Padding preserved as it is UI chrome) -->
+    <header
+        class="fixed top-0 left-0 w-full z-50 mix-blend-difference text-white py-6 box-border px-6 md:px-[80px] transition-transform duration-500 will-change-transform"
+        id="header">
+        <div class="w-full flex justify-between items-center">
+            <a href="#" class="text-3xl font-black tracking-tighter font-poppins">FAMOUS</a>
+
+            <nav class="hidden md:flex gap-10 font-bold text-sm uppercase tracking-wide">
+                <a href="#about" class="hover:opacity-60 transition-opacity">About</a>
+                <a href="#solution" class="hover:opacity-60 transition-opacity">Solution</a>
+                <a href="#creators" class="hover:opacity-60 transition-opacity">Creators</a>
+            </nav>
+
+            <a href="#contact"
+                class="hidden md:inline-block border border-white px-6 py-2 rounded-full font-bold text-sm hover:bg-white hover:text-black transition-all">
+                Contact
+            </a>
+
+            <!-- Mobile Menu Btn -->
+            <button class="md:hidden text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- 1. HERO SECTION -->
+    <section class="relative w-full h-[100vh]" id="hero-section">
+        <div class="sticky top-0 w-full h-full overflow-hidden bg-white flex flex-col justify-center items-center relative"
+            id="hero-sticky">
+
+            <!-- Expanding Image (Background) -->
+            <div id="hero-image-wrapper"
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 overflow-hidden flex justify-center items-center"
+                style="width: 100%; height: 100vh; clip-path: circle(0% at 50% 50%); opacity: 1;">
+                <img src="./assets/images/hero_visual_update.jpg" alt="Trendy Gen Z Creator"
+                    class="w-full h-full object-cover"
+                    style="image-rendering: -webkit-optimize-contrast; transform: translateZ(0); backface-visibility: hidden;">
+            </div>
+
+            <!-- Content Container (Text + Objects) -->
+            <div class="relative z-10 flex flex-col items-center justify-center w-full gap-[24px]">
+
+                <!-- Main Text Row -->
+                <!-- Main Text Row: Reduced gap to make it look like one word initially -->
+                <div class="flex items-center justify-center w-full gap-[16px] relative translate-y-[30px]">
+
+                    <!-- Left Text -->
+                    <div id="hero-text-left"
+                        class="text-huge tracking-tighter relative flex items-center justify-center">
+                        <span class="relative z-10">FAM</span>
+
+                        <!-- Obj 1 (Camera): Repositioned Behind/Covering 'F' (Updated) -->
+                        <div class="hero-obj hover-float" id="obj-camera"
+                            style="top: calc(-55% - 40px); left: -28%; width: 360px; z-index: -1; transform: scaleX(-1) rotate(-5deg); filter: drop-shadow(-30px 30px 10px rgba(255, 180, 0, 0.3));">
+                            <img src="./assets/images/camera_3d.png" alt="Camera 3D" class="w-full">
+                        </div>
+
+                        <!-- Obj 2 (Triangle): Moved Down 16px more -->
+                        <div class="hero-obj hover-float" id="obj-shape"
+                            style="bottom: calc(-60% - 16px); left: calc(15% - 10px); width: 180px; z-index: 50; transform: rotate(10deg); filter: drop-shadow(30px 30px 10px rgba(0, 100, 255, 0.3));">
+                            <img src="./assets/images/triangle_3d.png" alt="Triangle 3D" class="w-full">
+                        </div>
+                    </div>
+
+                    <!-- Right Text -->
+                    <div id="hero-text-right"
+                        class="text-huge tracking-tighter relative flex items-center justify-center translate-x-[-9px]">
+                        <span class="relative z-10">OUS</span>
+
+                        <!-- Obj 3 (Heart): Larger (140px), Higher (Updated) -->
+                        <div class="hero-obj hover-float" id="obj-heart"
+                            style="top: -50%; right: 28%; width: 140px; z-index: 50; transform: rotate(15deg); filter: drop-shadow(30px 30px 10px rgba(200, 50, 255, 0.3));">
+                            <img src="./assets/images/heart_3d.png" alt="Heart 3D" class="w-full">
+                        </div>
+
+                        <!-- Obj 4 (Thumb): Raised 16px more, Right 10px more -->
+                        <div class="hero-obj hover-float" id="obj-thumb"
+                            style="top: calc(80% - 126px); right: calc(-25% - 50px); width: 280px; z-index: 50; transform: rotate(-10deg); filter: drop-shadow(30px 30px 10px rgba(255, 60, 0, 0.3));">
+                            <img src="./assets/images/thumb_3d.png" alt="Thumb 3D" class="w-full">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sub Text -->
+                <!-- Sub Text -->
+                <div id="hero-subtext" class="text-center opacity-100 transition-opacity duration-500 mt-[48px]">
+                    <p class="text-xl md:text-2xl font-semibold leading-relaxed text-gray-800">
+                        당신의 브랜드가 중국에서 주목받는 순간을<br>
+                        페이머스가 함께 만듭니다.
+                    </p>
+                </div>
+            </div>
+
+
+            <!-- Scroll Down Indicator -->
+            <div class="absolute bottom-[40px] left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 pb-2 z-50">
+                <span class="text-sm font-semibold text-black tracking-wide">Scroll Down</span>
+                <div class="w-8 h-8 rounded-full border border-black flex items-center justify-center animate-bounce"
+                    style="animation-duration: 2s;">
+                    <svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 2. PARTNER SECTION (Bleed Left & Right Cutoff) -->
+    <section class="w-full py-40 bg-white overflow-hidden">
+        <div class="w-full flex flex-col">
+
+            <h2 class="section-title text-left mb-16 leading-[0.9] pl-6 md:pl-[80px]">
+                Find Your<br>
+                Perfect Partner<br>
+                With FAMOUS.
+            </h2>
+
+            <!-- [Bleed Layout Adjusted] 
+                     Shift Left: margin-left: -78px (Less aggressive cut, shifted back 36px)
+                -->
+            <div class="w-[150vw] ml-[-78px] flex items-center justify-start mb-20 py-10 overflow-hidden gap-6 pl-0">
+
+                <!-- 1. Circle (Cut off less) -->
+                <div class="img-strip-item w-[240px] h-[240px] rounded-full z-10">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=2820&auto=format&fit=crop"
+                        class="will-change-transform">
+                </div>
+
+                <!-- 2. Pill (Wider 1.5x) -->
+                <div class="img-strip-item w-[540px] h-[240px] rounded-[120px] z-10">
+                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=2820&auto=format&fit=crop&q=80"
+                        class="will-change-transform">
+                </div>
+
+                <!-- 3. Solid Circle (Yellow) - EMPTY -->
+                <div
+                    class="img-strip-item w-[200px] h-[200px] rounded-full bg-[#FFCA28] z-10 flex items-center justify-center overflow-hidden">
+                    <!-- No IMG for Parallax here -->
+                </div>
+
+                <!-- 4. Circle -->
+                <div class="img-strip-item w-[260px] h-[260px] rounded-full z-10">
+                    <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=2820&auto=format&fit=crop&q=80"
+                        class="will-change-transform">
+                </div>
+
+                <!-- 5. Pill (Wider 1.5x) -->
+                <div class="img-strip-item w-[480px] h-[220px] rounded-[110px] z-10">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=2820&auto=format&fit=crop&q=80"
+                        class="will-change-transform">
+                </div>
+
+                <!-- 6. Solid Circle (Purple) - EMPTY -->
+                <div
+                    class="img-strip-item w-[220px] h-[220px] rounded-full bg-[#A855F7] z-10 flex items-center justify-center overflow-hidden">
+                </div>
+
+                <!-- 7. Circle (End) -->
+                <div class="img-strip-item w-[240px] h-[240px] rounded-full z-10 opacity-80">
+                    <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=2820&auto=format&fit=crop&q=80"
+                        class="will-change-transform">
+                </div>
+
+                <!-- 8. NEW: Pill (Deep Blue) - Bleed Right -->
+                <div class="img-strip-item w-[500px] h-[240px] rounded-[120px] bg-[#0047FF] z-10">
+                    <!-- Empty Deep Blue Pill -->
+                </div>
+
+            </div>
+
+            <div class="w-full flex justify-end pr-6 md:pr-[80px] relative z-20">
+                <p
+                    class="text-right text-brand-gray/80 text-lg md:text-xl font-medium max-w-lg leading-[1.6] break-keep">
+                    중국 시장의 거대한 흐름 속에서 당신의 브랜드 이야기가<br />
+                    시작됩니다. 14억 소비자의 마음을 움직이는 트렌디한<br />
+                    인플루언서 매칭, 페이머스가 가장 확실한 성공 파트너가<br />
+                    되어드리겠습니다.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 3. SMART WORK (No Buttons) -->
+    <section class="bg-white pb-0" id="work">
+        <div class="w-full px-6 md:px-[160px] flex flex-col md:flex-row max-w-[1800px] mx-auto">
+
+            <!-- Left: Sticky Title (Button Removed) -->
+            <div id="work-left"
+                class="w-full md:w-1/3 h-auto md:h-screen p-0 flex flex-col justify-start z-10 bg-white">
+                <div class="pt-12 md:pt-32">
+                    <span class="block text-[#FF4D00] font-bold mb-4 tracking-widest uppercase">Our Solution</span>
+                    <h2 class="section-title leading-none mb-6">
+                        SMART<br>WORK
+                    </h2>
+                    <p class="text-lg text-gray-600 font-medium max-w-sm">
+                        성공적인 중국 마케팅을 위한<br>
+                        페이머스만의 독보적인 솔루션
+                    </p>
+                </div>
+            </div>
+
+            <!-- Right: Content (View Details Removed) -->
+            <div id="work-right" class="w-full md:w-2/3 flex flex-col pt-12 md:pt-32 pb-60 items-end">
+
+                <div
+                    class="work-item group relative block mb-32 first:mt-0 w-full max-w-[925px] flex flex-col items-end">
+                    <div class="w-full aspect-video rounded-[32px] overflow-hidden mb-6">
+                        <div class="parallax-inner w-full h-[150%] -mt-[15%] relative will-change-transform">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2940&auto=format&fit=crop"
+                                class="w-full h-full object-cover" alt="AI Matching">
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-between items-start w-full">
+                        <h3 class="text-2xl md:text-4xl font-bold mb-3">AI 정밀 매칭</h3>
+                        <p class="text-gray-500 font-medium leading-relaxed text-sm md:text-base mb-4">
+                            단순 팔로워 수가 아닌, 제품의 특징과 타겟 오디언스의 페르소나를 AI가 정밀 분석하여 브랜드에 가장 적합한 인플루언서를 매칭합니다.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="work-item group relative block mb-32 w-full max-w-[925px] flex flex-col items-end">
+                    <div class="w-full aspect-video rounded-[32px] overflow-hidden mb-6">
+                        <div class="parallax-inner w-full h-[150%] -mt-[15%] relative will-change-transform">
+                            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2940&auto=format&fit=crop"
+                                class="w-full h-full object-cover" alt="Automation">
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-between items-start w-full">
+                        <h3 class="text-2xl md:text-4xl font-bold mb-3">풀 프로세스 자동화</h3>
+                        <p class="text-gray-500 font-medium leading-relaxed text-sm md:text-base mb-4">
+                            인플루언서 리스트업부터 섭외 요청, 원고 검수, 포스팅 확인까지 복잡한 마케팅 과정을 원스톱으로 자동화하여 업무 리소스를 혁신적으로 절감합니다.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="work-item work-item-last group relative block w-full max-w-[925px] flex flex-col items-end">
+                    <div class="w-full aspect-video rounded-[32px] overflow-hidden mb-6">
+                        <div class="parallax-inner w-full h-[150%] -mt-[15%] relative will-change-transform">
+                            <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2940&auto=format&fit=crop"
+                                class="w-full h-full object-cover" alt="Dashboard">
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-between items-start w-full">
+                        <h3 class="text-2xl md:text-4xl font-bold mb-3">실시간 성과 대시보드</h3>
+                        <p class="text-gray-500 font-medium leading-relaxed text-sm md:text-base mb-4">
+                            도우인, 샤오홍슈, 위챗 등 중국 주요 플랫폼의 캠페인 데이터를 실시간으로 수집하고 분석하여 투명하고 정확한 성과 리포트를 제공합니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3.2 PERFORMANCE STATS -->
+    <section class="relative z-20 bg-white py-32 px-6 md:px-[80px]" id="solution-stats">
+        <div class="w-full">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-24">
+                <div>
+                    <span class="block text-[#FF4D00] font-bold tracking-widest mb-4">PERFORMANCE</span>
+                    <h2 class="section-title leading-none">WHY FAMOUS?</h2>
+                </div>
+                <p class="mt-6 md:mt-0 text-gray-500 text-lg md:text-xl max-w-md font-medium">
+                    데이터 기반의 정밀한 매칭과<br>압도적인 퍼포먼스를 경험하세요.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[24px] pt-16">
+
+                <!-- 1. 활성 DB수 -->
+                <div
+                    class="bg-[#F7F8FA] rounded-[24px] p-[clamp(30px,2.5vw,60px)] flex flex-col justify-between items-start text-left h-full aspect-square group hover:-translate-y-2 hover:bg-[#FF4D00] transition-all duration-300">
+                    <h3
+                        class="text-[clamp(64px,5vw,130px)] font-medium leading-none tracking-tighter text-black group-hover:text-white transition-colors duration-300">
+                        <span class="counter-num" data-target="20">0</span><span class="text-4xl ml-1">M+</span>
+                    </h3>
+                    <div>
+                        <p
+                            class="text-[24px] font-bold text-black group-hover:text-white mb-3 transition-colors duration-300">
+                            활성 DB수</p>
+                        <p
+                            class="text-[16px] text-[#666] group-hover:text-white leading-relaxed break-keep transition-colors duration-300">
+                            국내외 최대 규모의<br>인플루언서 데이터 보유
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 2. 매칭 정확도 -->
+                <div
+                    class="bg-[#F7F8FA] rounded-[24px] p-[clamp(30px,2.5vw,60px)] flex flex-col justify-between items-start text-left h-full aspect-square group hover:-translate-y-2 hover:bg-[#FF4D00] transition-all duration-300">
+                    <h3
+                        class="text-[clamp(64px,5vw,130px)] font-medium leading-none tracking-tighter text-black group-hover:text-white transition-colors duration-300">
+                        <span class="counter-num" data-target="95">0</span><span class="text-4xl ml-1">%</span>
+                    </h3>
+                    <div>
+                        <p
+                            class="text-[24px] font-bold text-black group-hover:text-white mb-3 transition-colors duration-300">
+                            매칭 정확도</p>
+                        <p
+                            class="text-[16px] text-[#666] group-hover:text-white leading-relaxed break-keep transition-colors duration-300">
+                            AI 분석을 통한<br>최적의 파트너 매칭
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 3. 업무 효율성 -->
+                <div
+                    class="bg-[#F7F8FA] rounded-[24px] p-[clamp(30px,2.5vw,60px)] flex flex-col justify-between items-start text-left h-full aspect-square group hover:-translate-y-2 hover:bg-[#FF4D00] transition-all duration-300">
+                    <h3
+                        class="text-[clamp(64px,5vw,130px)] font-medium leading-none tracking-tighter text-black group-hover:text-white transition-colors duration-300">
+                        <span class="counter-num" data-target="9">0</span><span class="text-4xl ml-1">x</span>
+                    </h3>
+                    <div>
+                        <p
+                            class="text-[24px] font-bold text-black group-hover:text-white mb-3 transition-colors duration-300">
+                            업무 효율성</p>
+                        <p
+                            class="text-[16px] text-[#666] group-hover:text-white leading-relaxed break-keep transition-colors duration-300">
+                            자동화된 프로세스로<br>비효율적인 업무 제거
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 4. 연간 캠페인 -->
+                <div
+                    class="bg-[#F7F8FA] rounded-[24px] p-[clamp(30px,2.5vw,60px)] flex flex-col justify-between items-start text-left h-full aspect-square group hover:-translate-y-2 hover:bg-[#FF4D00] transition-all duration-300">
+                    <h3
+                        class="text-[clamp(64px,5vw,130px)] font-medium leading-none tracking-tighter text-black group-hover:text-white transition-colors duration-300">
+                        <span class="counter-num" data-target="1.5" data-decimal="1">0</span><span
+                            class="text-4xl ml-1">만</span>
+                    </h3>
+                    <div>
+                        <p
+                            class="text-[24px] font-bold text-black group-hover:text-white mb-3 transition-colors duration-300">
+                            연간 캠페인</p>
+                        <p
+                            class="text-[16px] text-[#666] group-hover:text-white leading-relaxed break-keep transition-colors duration-300">
+                            검증된 성공 사례와<br>풍부한 운영 노하우
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. TOP CREATORS (Spacing & Rounded Button) -->
+    <section id="creators" class="relative w-full h-[330vh] bg-white text-black">
+        <div
+            class="sticky top-0 left-0 w-full h-screen flex flex-col justify-center items-center z-10 pointer-events-none">
+
+            <!-- Title <-> Subtext Margin: mb-6 (24px) -->
+            <h2 class="section-title heading-none text-center mb-6">
+                TOP<br>CREATORS
+            </h2>
+
+            <p class="text-xl md:text-2xl font-bold tracking-widest text-gray-500 uppercase">
+                Creating New Waves
+            </p>
+
+            <!-- Subtext <-> Button Margin: mt-12 (48px) & Rounded Full -->
+            <a href="#"
+                class="mt-12 px-8 py-3 bg-transparent border border-black text-black font-bold uppercase hover:bg-[#FF4D00] hover:border-transparent hover:text-white transition-all duration-300 pointer-events-auto rounded-full">
+                View More
+            </a>
+        </div>
+
+        <div class="absolute top-0 left-0 w-full h-full z-0 pointer-events-none">
+            <!-- Creator bubbles maintained -->
+            <div
+                class="creator-reveal flex flex-col items-center absolute top-[60vh] left-[10%] md:left-[15%] w-[40vw] md:w-[22vw] opacity-0 scale-50 blur-sm">
+                <div class="w-full aspect-square rounded-full overflow-hidden shadow-2xl relative group">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=2820&auto=format&fit=crop"
+                        class="w-full h-full object-cover rounded-full transition-transform duration-700 group-hover:scale-110">
+                </div>
+                <div class="mt-5 text-center">
+                    <h3 class="text-[15px] md:text-[18px] font-semibold text-[#222] mb-1">Sarah Kim</h3>
+                    <p class="text-[12px] md:text-[14px] text-[#888] tracking-wider">@sarah_style</p>
+                </div>
+            </div>
+
+            <div
+                class="creator-reveal flex flex-col items-center absolute top-[100vh] right-[10%] md:right-[15%] w-[40vw] md:w-[22vw] opacity-0 scale-50 blur-sm">
+                <div class="w-full aspect-square rounded-full overflow-hidden shadow-2xl relative group">
+                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=2820&auto=format&fit=crop"
+                        class="w-full h-full object-cover rounded-full transition-transform duration-700 group-hover:scale-110">
+                </div>
+                <div class="mt-5 text-center">
+                    <h3 class="text-[15px] md:text-[18px] font-semibold text-[#222] mb-1">Jane Fit</h3>
+                    <p class="text-[12px] md:text-[14px] text-[#888] tracking-wider">@jane_fitness</p>
+                </div>
+            </div>
+
+            <div
+                class="creator-reveal flex flex-col items-center absolute top-[140vh] left-[10%] md:left-[15%] w-[40vw] md:w-[22vw] opacity-0 scale-50 blur-sm">
+                <div class="w-full aspect-square rounded-full overflow-hidden shadow-2xl relative group">
+                    <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=2820&auto=format&fit=crop"
+                        class="w-full h-full object-cover rounded-full transition-transform duration-700 group-hover:scale-110">
+                </div>
+                <div class="mt-5 text-center">
+                    <h3 class="text-[15px] md:text-[18px] font-semibold text-[#222] mb-1">Mike Lee</h3>
+                    <p class="text-[12px] md:text-[14px] text-[#888] tracking-wider">@mike_vlog</p>
+                </div>
+            </div>
+
+            <div
+                class="creator-reveal flex flex-col items-center absolute top-[180vh] right-[10%] md:right-[15%] w-[40vw] md:w-[22vw] opacity-0 scale-50 blur-sm">
+                <div class="w-full aspect-square rounded-full overflow-hidden shadow-2xl relative group">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2820&auto=format&fit=crop"
+                        class="w-full h-full object-cover rounded-full transition-transform duration-700 group-hover:scale-110">
+                </div>
+                <div class="mt-5 text-center">
+                    <h3 class="text-[15px] md:text-[18px] font-semibold text-[#222] mb-1">Davie Tech</h3>
+                    <p class="text-[12px] md:text-[14px] text-[#888] tracking-wider">@davie_tech</p>
+                </div>
+            </div>
+
+            <div
+                class="creator-reveal flex flex-col items-center absolute top-[220vh] left-[10%] md:left-[15%] w-[40vw] md:w-[22vw] opacity-0 scale-50 blur-sm">
+                <div class="w-full aspect-square rounded-full overflow-hidden shadow-2xl relative group">
+                    <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=2820&auto=format&fit=crop"
+                        class="w-full h-full object-cover rounded-full transition-transform duration-700 group-hover:scale-110">
+                </div>
+                <div class="mt-5 text-center">
+                    <h3 class="text-[15px] md:text-[18px] font-semibold text-[#222] mb-1">Anna Park</h3>
+                    <p class="text-[12px] md:text-[14px] text-[#888] tracking-wider">@anna_design</p>
+                </div>
+            </div>
+
+            <div
+                class="creator-reveal flex flex-col items-center absolute top-[260vh] right-[10%] md:right-[15%] w-[40vw] md:w-[22vw] opacity-0 scale-50 blur-sm">
+                <div class="w-full aspect-square rounded-full overflow-hidden shadow-2xl relative group">
+                    <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?q=80&w=2820&auto=format&fit=crop"
+                        class="w-full h-full object-cover rounded-full transition-transform duration-700 group-hover:scale-110">
+                </div>
+                <div class="mt-5 text-center">
+                    <h3 class="text-[15px] md:text-[18px] font-semibold text-[#222] mb-1">Lisa Travel</h3>
+                    <p class="text-[12px] md:text-[14px] text-[#888] tracking-wider">@lisa_travel</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 6. CONTACT US & 7. FOOTER (Integrated #111) -->
+
+    <!-- Contact Section: bg-black (#111), No padding bottom if merged -->
+    <section
+        class="w-full py-32 px-6 md:px-[80px] bg-[#111] text-white overflow-hidden relative border-b border-[#222]">
+        <div class="w-full flex flex-col md:flex-row items-end justify-between relative z-10">
+            <div class="w-full md:w-3/5 text-left">
+                <h2 class="section-title mb-8 leading-tight">
+                    READY TO<br>BE FAMOUS?
+                </h2>
+                <p class="text-white/90 text-lg md:text-xl font-bold leading-relaxed max-w-xl">
+                    브랜드의 성장을 위한 최고의 파트너.<br>
+                    지금 바로 페이머스와 함께하세요.
+                </p>
+            </div>
+
+            <div class="w-full md:w-2/5 mt-10 md:mt-0 flex flex-col items-start md:items-end space-y-8">
+                <div class="text-left md:text-right space-y-2">
+                    <div class="flex items-center gap-2 justify-start md:justify-end">
+                        <span class="opacity-70 text-sm font-bold uppercase">E-mail</span>
+                        <a href="mailto:support@etribe.co.kr"
+                            class="text-xl font-black underline decoration-2 underline-offset-4 hover:opacity-80">support@etribe.co.kr</a>
+                    </div>
+                    <div class="flex items-center gap-2 justify-start md:justify-end">
+                        <span class="opacity-70 text-sm font-bold uppercase">Tel</span>
+                        <a href="tel:02-1234-5678" class="text-xl font-black hover:opacity-80">02-1234-5678</a>
+                    </div>
+                </div>
+                <a href="mailto:support@etribe.co.kr"
+                    class="inline-flex items-center justify-center bg-white text-black px-10 py-5 rounded-full font-black text-xl hover:bg-[#FF4D00] hover:text-white transition-all duration-300 shadow-xl transform hover:-translate-y-1">
+                    프로젝트 문의하기 →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer: Removed mt-20, bg-[#111] matching above -->
+    <footer class="bg-[#111] text-white py-12 px-6 md:px-[80px]" id="footer">
+        <div class="w-full">
+            <div class="flex flex-col md:flex-row justify-between items-start mb-12 gap-12">
+                <div class="md:w-1/3">
+                    <div class="text-3xl font-black mb-6 text-[#FF4D00] font-poppins">FAMOUS</div>
+                    <p class="text-gray-400 leading-relaxed text-sm">
+                        AI 기반 중국 인플루언서 마케팅 자동화 플랫폼.<br>
+                        최첨단 AI 매칭 기술로 브랜드의<br>
+                        중국 시장 진출을 가속화합니다.
+                    </p>
+                </div>
+                <div class="flex flex-wrap gap-20 md:w-2/3 justify-start md:justify-end">
+                    <div>
+                        <h4 class="font-bold mb-6 text-sm text-gray-400 uppercase tracking-wider">Service</h4>
+                        <ul class="space-y-4 text-sm font-medium">
+                            <li><a href="#" class="hover:text-[#00E5BC] transition-colors">인플루언서 탐색</a></li>
+                            <li><a href="#" class="hover:text-[#00E5BC] transition-colors">블로그</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold mb-6 text-sm text-gray-400 uppercase tracking-wider">Support</h4>
+                        <ul class="space-y-4 text-sm font-medium">
+                            <li><a href="#" class="hover:text-[#00E5BC] transition-colors">문의하기</a></li>
+                            <li><a href="#" class="hover:text-[#00E5BC] transition-colors">이용약관</a></li>
+                            <li><a href="#" class="hover:text-[#00E5BC] transition-colors">개인정보처리방침</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold mb-6 text-sm text-gray-400 uppercase tracking-wider">Contact</h4>
+                        <ul class="space-y-4 text-sm font-medium text-gray-400">
+                            <li>support@etribe.co.kr</li>
+                            <li>02-1234-5678</li>
+                            <li>서울시 마포구 양화로 123</li>
+                            <li>Account: 신한 110-123-456789</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 font-medium">
+                <p>&copy; 2024 ETRIBE MINT. ALL RIGHTS RESERVED.</p>
+                <div class="flex gap-6 mt-4 md:mt-0">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Developed by ETRIBE</a>
+                </div>
+            </div>
+            <div class="fixed bottom-10 right-10 z-50">
+                <button
+                    class="w-16 h-16 bg-[#182824] rounded-full flex items-center justify-center text-[#00E5BC] hover:scale-110 transition-transform shadow-lg border border-[#00E5BC]/30">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // --- 1. Header Logic ---
+        const header = document.getElementById('header');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                header.classList.add('-translate-y-full');
+            } else {
+                header.classList.remove('-translate-y-full');
+            }
+            lastScroll = currentScroll;
+        });
+
+
+        // --- 2. Hero Animation & FLOATING OBJECTS ---
+
+        // Idle Floating Animation (Yoyo)
+        gsap.to("#obj-camera", { y: -25, duration: 3.5, repeat: -1, yoyo: true, ease: "sine.inOut" });
+        gsap.to("#obj-shape", { y: 20, duration: 4.0, repeat: -1, yoyo: true, ease: "sine.inOut", delay: 0.5 });
+        gsap.to("#obj-thumb", { y: -30, duration: 3.8, repeat: -1, yoyo: true, ease: "sine.inOut", delay: 0.2 });
+        gsap.to("#obj-heart", { y: 15, duration: 3.2, repeat: -1, yoyo: true, ease: "sine.inOut", delay: 0.8 });
+
+
+        let heroTimeline = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#hero-section",
+                start: "top top",
+                end: "+=150%",
+                scrub: 0.1,
+                pin: true,
+                pinSpacing: true,
+            }
+        });
+
+        heroTimeline
+            // Text Split
+            .to("#hero-text-left", { x: "-80vw", duration: 2, ease: "power2.inOut" }, "split")
+            .to("#hero-text-right", { x: "80vw", duration: 2, ease: "power2.inOut" }, "split")
+
+            // 3D Objects: Move outward
+            .to("#obj-camera", { x: "-300px", opacity: 0, duration: 1.5, ease: "power2.in" }, "split")
+            .to("#obj-shape", { x: "-300px", opacity: 0, duration: 1.5, ease: "power2.in" }, "split")
+            .to("#obj-thumb", { x: "300px", opacity: 0, duration: 1.5, ease: "power2.in" }, "split")
+            .to("#obj-heart", { x: "250px", opacity: 0, duration: 1.5, ease: "power2.in" }, "split")
+
+            .to("#hero-subtext", { opacity: 0, duration: 0.1 }, "split")
+            .to("#hero-image-wrapper", {
+                clipPath: "circle(100% at 50% 50%)",
+                width: "100%",
+                height: "100vh",
+                borderRadius: "0px",
+                filter: "blur(0px)", // Ensure blur is explicitly cleared
+                duration: 2,
+                ease: "power2.inOut",
+                onComplete: () => { gsap.set("#hero-image-wrapper", { clearProps: "filter" }); } // Hard Cleanup
+            }, "split");
+
+
+        // --- 2.2 PARTNER STRIP PARALLAX ---
+        // Internal GSAP Parallax for images inside items
+        gsap.utils.toArray(".img-strip-item img").forEach(img => {
+            gsap.fromTo(img,
+                { y: "-15%" },
+                {
+                    y: "15%",
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: img.parentElement, // Trigger from the container (shape)
+                        start: "top bottom",        // When shape hits bottom of viewport
+                        end: "bottom top",          // When shape leaves top of viewport
+                        scrub: true
+                    }
+                }
+            );
+        });
+
+
+        // --- 3. SMART WORK PINNING ---
+        ScrollTrigger.create({
+            trigger: "#work",
+            start: "top top",
+            endTrigger: ".work-item-last",
+            end: "top top+=128",
+            pin: "#work-left",
+            pinSpacing: false,
+
+            scrub: 1,
+            anticipatePin: 1
+        });
+
+
+
+        // --- 3.1 SMART WORK PARALLAX (Deep Effect) ---
+        gsap.utils.toArray(".parallax-inner").forEach(inner => {
+            gsap.fromTo(inner,
+                { y: "-10%" },
+                {
+                    y: "10%",
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: inner.parentElement,
+                        start: "top bottom",
+                        end: "bottom top",
+                        scrub: true
+                    }
+                }
+            );
+        });
+
+
+        // --- 4. TOP CREATORS SEQUENTIAL REVEAL ---
+        gsap.utils.toArray(".creator-reveal").forEach((item) => {
+            gsap.to(item, {
+                opacity: 1,
+                scale: 1,
+                filter: "blur(0px)",
+                duration: 1,
+                scrollTrigger: {
+                    trigger: item,
+                    start: "top 95%",
+                    end: "top 40%",
+                    scrub: 1.5
+                }
+            });
+        });
+
+
+        // Counter Animation for Stats
+        gsap.utils.toArray(".counter-num").forEach(num => {
+            let target = parseFloat(num.getAttribute("data-target"));
+            let isDecimal = num.getAttribute("data-decimal") === "1";
+
+            ScrollTrigger.create({
+                trigger: num,
+                start: "top 85%",
+                once: true,
+                onEnter: () => {
+                    gsap.to(num, {
+                        innerHTML: target,
+                        duration: 1.5,
+                        ease: "power2.out",
+                        snap: { innerHTML: isDecimal ? 0.1 : 1 },
+                        onUpdate: function () {
+                            num.innerHTML = isDecimal ? this.targets()[0].innerHTML : Math.round(this.targets()[0].innerHTML);
+                        }
+                    });
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>
