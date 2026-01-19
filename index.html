@@ -462,7 +462,7 @@
 
                 <!-- 1. 활성 DB수 -->
                 <div
-                    class="bg-[#F7F8FA] rounded-[24px] p-[clamp(30px,2.5vw,60px)] flex flex-col justify-between items-start text-left h-full aspect-square group hover:-translate-y-2 hover:bg-[#FF4D00] transition-all duration-300">
+                    class="stat-card bg-[#F7F8FA] rounded-[24px] p-[clamp(30px,2.5vw,60px)] flex flex-col justify-between items-start text-left h-full aspect-square group hover:-translate-y-2 hover:bg-[#FF4D00] transition-all duration-300">
                     <h3
                         class="text-[clamp(64px,5vw,130px)] font-medium leading-none tracking-tighter text-black group-hover:text-white transition-colors duration-300">
                         <span class="counter-num" data-target="20">0</span><span class="text-4xl ml-1">M+</span>
@@ -480,7 +480,7 @@
 
                 <!-- 2. 매칭 정확도 -->
                 <div
-                    class="bg-[#F7F8FA] rounded-[24px] p-[clamp(30px,2.5vw,60px)] flex flex-col justify-between items-start text-left h-full aspect-square group hover:-translate-y-2 hover:bg-[#FF4D00] transition-all duration-300">
+                    class="stat-card bg-[#F7F8FA] rounded-[24px] p-[clamp(30px,2.5vw,60px)] flex flex-col justify-between items-start text-left h-full aspect-square group hover:-translate-y-2 hover:bg-[#FF4D00] transition-all duration-300">
                     <h3
                         class="text-[clamp(64px,5vw,130px)] font-medium leading-none tracking-tighter text-black group-hover:text-white transition-colors duration-300">
                         <span class="counter-num" data-target="95">0</span><span class="text-4xl ml-1">%</span>
@@ -498,7 +498,7 @@
 
                 <!-- 3. 업무 효율성 -->
                 <div
-                    class="bg-[#F7F8FA] rounded-[24px] p-[clamp(30px,2.5vw,60px)] flex flex-col justify-between items-start text-left h-full aspect-square group hover:-translate-y-2 hover:bg-[#FF4D00] transition-all duration-300">
+                    class="stat-card bg-[#F7F8FA] rounded-[24px] p-[clamp(30px,2.5vw,60px)] flex flex-col justify-between items-start text-left h-full aspect-square group hover:-translate-y-2 hover:bg-[#FF4D00] transition-all duration-300">
                     <h3
                         class="text-[clamp(64px,5vw,130px)] font-medium leading-none tracking-tighter text-black group-hover:text-white transition-colors duration-300">
                         <span class="counter-num" data-target="9">0</span><span class="text-4xl ml-1">x</span>
@@ -516,7 +516,7 @@
 
                 <!-- 4. 연간 캠페인 -->
                 <div
-                    class="bg-[#F7F8FA] rounded-[24px] p-[clamp(30px,2.5vw,60px)] flex flex-col justify-between items-start text-left h-full aspect-square group hover:-translate-y-2 hover:bg-[#FF4D00] transition-all duration-300">
+                    class="stat-card bg-[#F7F8FA] rounded-[24px] p-[clamp(30px,2.5vw,60px)] flex flex-col justify-between items-start text-left h-full aspect-square group hover:-translate-y-2 hover:bg-[#FF4D00] transition-all duration-300">
                     <h3
                         class="text-[clamp(64px,5vw,130px)] font-medium leading-none tracking-tighter text-black group-hover:text-white transition-colors duration-300">
                         <span class="counter-num" data-target="1.5" data-decimal="1">0</span><span
@@ -861,28 +861,88 @@
         });
 
 
-        // Counter Animation for Stats
-        gsap.utils.toArray(".counter-num").forEach(num => {
-            let target = parseFloat(num.getAttribute("data-target"));
-            let isDecimal = num.getAttribute("data-decimal") === "1";
+        // --- 5. WHY FAMOUS STATS (Scrub Style: Scroll-Driven Spread) ---
 
-            ScrollTrigger.create({
-                trigger: num,
-                start: "top 85%",
-                once: true,
-                onEnter: () => {
-                    gsap.to(num, {
-                        innerHTML: target,
-                        duration: 1.5,
-                        ease: "power2.out",
-                        snap: { innerHTML: isDecimal ? 0.1 : 1 },
-                        onUpdate: function () {
-                            num.innerHTML = isDecimal ? this.targets()[0].innerHTML : Math.round(this.targets()[0].innerHTML);
-                        }
-                    });
+        const statsSection = document.querySelector("#solution-stats");
+        const cards = gsap.utils.toArray(".stat-card");
+
+        // Helper: Calculate EXACT offset to center for EACH card
+        const getCenteredX = (index, target) => {
+            if (window.innerWidth < 1024) return 0;
+
+            const containerCenter = statsSection.offsetWidth / 2;
+            const cardRect = target.getBoundingClientRect();
+            // We need to calculate relative to the container since they are children
+            // But since they are in a grid, their 'offsetLeft' is reliable relative to the grid container
+            const gridContainer = statsSection.querySelector(".grid");
+            const gridRect = gridContainer.getBoundingClientRect();
+
+            // Current center of the card relative to viewport
+            const cardCenter = cardRect.left + cardRect.width / 2;
+            const sectionCenter = statsSection.getBoundingClientRect().left + statsSection.offsetWidth / 2;
+
+            // The distance needed to move to get to section center
+            return sectionCenter - cardCenter;
+        };
+
+        // Master Scrub Timeline
+        let statTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: statsSection,
+                start: "top 25%", // Start later as requested
+                end: "top -30%",
+                scrub: 0,
+                onUpdate: (self) => {
+                    if (self.progress > 0.7 && !statsSection.classList.contains("counted")) {
+                        statsSection.classList.add("counted");
+                        runCounting();
+                    }
                 }
-            });
+            }
         });
+
+        // Use functional values for 'x' in fromTo to calculate per-element
+        statTl.fromTo(cards,
+            {
+                x: (i, target) => getCenteredX(i, target), // Dynamic calculation
+                y: 0,
+                autoAlpha: 1,
+                rotation: (i) => gsap.utils.random(-1, 1), // Minimal rotation
+                scale: 1,
+                zIndex: (i) => 4 - i
+            },
+            {
+                x: 0,
+                rotation: 0,
+                duration: 1,
+                ease: "none",
+                immediateRender: true // Crucial: Force stack immediately
+            }
+        );
+
+        // Separate Counting Function (Runs ONCE)
+        function runCounting() {
+            cards.forEach((card) => {
+                const num = card.querySelector(".counter-num");
+                if (!num) return;
+
+                let target = parseFloat(num.getAttribute("data-target"));
+                let isDecimal = num.getAttribute("data-decimal") === "1";
+                let obj = { val: 0 };
+
+                // Animate numbers independent of scrub
+                gsap.to(obj, {
+                    val: target,
+                    duration: 1.5,
+                    ease: "power2.out",
+                    onUpdate: () => {
+                        num.innerText = isDecimal ? obj.val.toFixed(1) : Math.round(obj.val);
+                    }
+                });
+            });
+        }
+
+        ScrollTrigger.refresh();
 
     </script>
 </body>
