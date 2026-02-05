@@ -31,7 +31,7 @@
                 extend: {
                     fontFamily: {
                         sans: ['"Pretendard"', 'sans-serif'],
-                        display: ['"Paperlogy-8ExtraBold"', 'sans-serif'],
+                        display: ['"Pretendard"', 'sans-serif'],
                         poppins: ['"Poppins"', 'sans-serif'],
                     },
                     colors: {
@@ -67,19 +67,18 @@
 
         .text-huge {
             /* Increased size (1.2x) -> Reduced by 15% */
-            font-family: 'Paperlogy-8ExtraBold', sans-serif;
+            font-family: 'Pretendard', sans-serif;
             font-size: clamp(4.8rem, 13.5vw, 16rem);
             line-height: 0.9;
         }
 
         /* Global Section Titles */
         .section-title {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Pretendard', 'Poppins', sans-serif;
             font-weight: 800;
             font-size: clamp(3rem, 5vw, 88px);
             /* Max 96px */
             line-height: 1.0;
-            text-transform: uppercase;
         }
 
         /* Hide scrollbar for cleaner look */
@@ -160,6 +159,7 @@
             <a href="#" class="text-3xl font-black tracking-tighter font-poppins">FAMOUS</a>
 
             <nav class="hidden md:flex gap-10 font-bold text-sm uppercase tracking-wide">
+                <a href="about.html" class="hover:opacity-60 transition-opacity">ABOUT</a>
                 <a href="#creators" class="hover:opacity-60 transition-opacity">CREATORS</a>
                 <a href="#" class="hover:opacity-60 transition-opacity">BLOG</a>
                 <a href="#contact" class="hover:opacity-60 transition-opacity">CONTACT</a>

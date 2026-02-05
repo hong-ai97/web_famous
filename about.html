@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZING | 중국 시장, 지금 울려 퍼트린다</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Pretendard"', 'sans-serif'],
+                        display: ['"Pretendard"', 'sans-serif'],
+                        poppins: ['"Poppins"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            black: '#111111',
+                            gray: '#333333',
+                            accent: '#FF4D00',
+                            purple: '#A855F7',
+                            yellow: '#FFCA28',
+                        }
+                    },
+                    spacing: {
+                        'section': '160px',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <style>
+        body {
+            background-color: #ffffff;
+            color: #111111;
+            overflow-x: hidden;
+            word-break: keep-all;
+            position: relative;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .section-padding {
+            padding-top: var(--tw-spacing-section);
+            padding-bottom: var(--tw-spacing-section);
+        }
+
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+
+        .reveal-y {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1), transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal-y.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        .dark-glass-card {
+            background: rgba(20, 20, 20, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        #hero-img-box {
+            width: 650px;
+            height: 420px;
+            border-radius: 48px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @media (max-width: 768px) {
+            #hero-img-box {
+                width: 90%;
+                height: 280px;
+            }
+        }
+
+        .scroll-icon {
+            width: 24px;
+            height: 40px;
+            border: 2px solid #111111;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .scroll-icon::before {
+            content: "";
+            width: 4px;
+            height: 8px;
+            background: #FF4D00;
+            position: absolute;
+            left: 50%;
+            top: 8px;
+            transform: translateX(-50%);
+            border-radius: 2px;
+            animation: scroll-wheel 2s infinite;
+        }
+
+        @keyframes scroll-wheel {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(-50%, 15px);
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .char {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(1em);
+        }
+
+        @keyframes slide {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        .logo-track {
+            display: flex;
+            width: max-content;
+            animation: slide 40s linear infinite;
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased text-brand-black selection:bg-brand-accent selection:text-white">
+
+    <header class="fixed top-0 left-0 w-full z-50 py-6 px-6 md:px-[80px] transition-all duration-500" id="header">
+        <div class="w-full flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2">
+                <!-- Simple logo representation -->
+                <span class="text-3xl font-black tracking-tighter font-poppins text-white lowercase">zing</span>
+                <div class="w-2 h-2 bg-brand-accent rounded-full mb-2"></div>
+            </a>
+
+            <nav class="hidden md:flex gap-10 font-bold text-sm text-white">
+                <a href="#" class="hover:text-white/80 transition-colors">zing 소개</a>
+                <a href="#" class="hover:text-white/80 transition-colors">인플루언서 탐색</a>
+                <a href="#" class="hover:text-white/80 transition-colors">캠페인 진행 현황</a>
+                <a href="#" class="hover:text-white/80 transition-colors">마케팅 인사이트</a>
+                <a href="#" class="hover:text-white/80 transition-colors">문의하기</a>
+            </nav>
+
+            <div class="hidden md:flex items-center gap-6 font-bold text-sm">
+                <a href="#" class="text-white hover:text-white/80 transition-colors">Login</a>
+                <a href="#"
+                    class="bg-white text-brand-black px-8 py-2.5 rounded-full hover:bg-white/90 transition-all shadow-lg text-xs">Join</a>
+            </div>
+
+            <button class="md:hidden text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Section 1: Hero Discovery (New Design) -->
+        <section id="hero-section" class="relative w-full h-screen min-h-[800px] bg-cover bg-center flex items-center"
+            style="background-image: url('/hero-bg-paint.png');">
+            <!-- Overlay not needed if image is dark enough, but based on reference, text is white on painted BG. -->
+
+            <div class="w-full px-6 md:px-[80px] mt-20"> <!-- mt-20 to offset fixed header -->
+                <div class="max-w-[1600px]">
+                    <h1
+                        class="text-[clamp(3.5rem,8.5vw,160px)] font-black leading-[0.95] tracking-tighter text-white mb-12 font-poppins">
+                        WE CREATE<br>
+                        BRILLIANT<br>
+                        EXPERIENCES
+                    </h1>
+                    <p class="text-white/90 text-lg md:text-2xl font-bold leading-relaxed max-w-2xl">
+                        안내 문구 징은 어떤어떤걸 하는<br>
+                        회사이며 세줄정도가 들어가면 좋을듯요<br>
+                        암튼 텍스트입니다
+                    </p>
+                </div>
+            </div>
+
+            <!-- Optional: Keep scroll hint if desired, but image didn't have it. I'll remove it to be strict. -->
+        </section>
+
+        <!-- Section 2: Market Context (New Design - Black Theme) -->
+        <section id="market-section" class="relative w-full min-h-screen bg-black text-white">
+            <div class="w-full flex flex-col items-center px-6 py-[200px]">
+                <!-- Section Header -->
+                <div class="text-center z-20">
+                    <span class="block text-gray-400 text-sm font-bold uppercase tracking-[0] mb-6">Background</span>
+                    <h2 class="text-4xl md:text-[56px] font-bold leading-tight tracking-tight">
+                        한국 브랜드에 열린<br>
+                        중국 시장의 황금기
+                    </h2>
+                </div>
+
+                <!-- Spacer -->
+                <div class="h-[88px] w-full"></div>
+
+                <!-- Content Container (1680px Grid) -->
+                <div class="relative w-full max-w-[1680px] grid grid-cols-12 gap-[20px] mx-auto h-[580px]">
+
+                    <!-- Left Text Area (Align Top + 48px offset) -->
+                    <div class="col-start-1 col-span-4 md:col-start-2 md:col-span-3 h-full relative">
+                        <div class="absolute top-0 left-0 w-full pt-[48px]">
+                            <!-- Stage 1 Left -->
+                            <div class="market-text-left-1 w-full">
+                                <h3 class="text-[32px] md:text-[40px] font-semibold leading-snug word-keep">
+                                    한국과 중국 교류<br>재개에 따른<br>소비 회복 가속화
+                                </h3>
+                            </div>
+                            <!-- Stage 2 Left -->
+                            <div class="market-text-left-2 w-full absolute top-[48px] left-0 opacity-0 translate-y-8">
+                                <h3 class="text-[32px] md:text-[40px] font-semibold leading-snug word-keep">
+                                    새로운<br>검색엔진으로 등극한<br>샤오홍슈
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Center Image Area (Cols 5-8) -->
+                    <div
+                        class="col-start-1 col-span-12 md:col-start-5 md:col-span-4 relative z-10 flex justify-center h-[580px]">
+                        <div class="w-[546px] h-[580px] relative rounded-[40px] overflow-hidden">
+                            <!-- Stage 1 Image -->
+                            <div class="market-img-1 absolute inset-0 w-full h-full">
+                                <img src="https://images.unsplash.com/photo-1553729459-efe14ef6055d?q=80&w=2000&auto=format&fit=crop"
+                                    class="w-full h-full object-cover" alt="Golden Age">
+                                <div class="absolute inset-0 bg-black/20"></div>
+                            </div>
+                            <!-- Stage 2 Image (Covers Stage 1) -->
+                            <div class="market-img-2 absolute inset-0 w-full h-full translate-y-[110%] bg-white">
+                                <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=2000&auto=format&fit=crop"
+                                    class="w-full h-full object-cover" alt="Xiaohongshu">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Text Area (Align Bottom - 48px offset) -->
+                    <div class="col-start-1 col-span-4 md:col-start-9 md:col-span-3 h-full relative">
+                        <div class="absolute bottom-0 left-0 w-full pb-[48px] md:pl-[60px]">
+                            <!-- Stage 1 Right -->
+                            <div class="market-text-right-1 w-full">
+                                <p class="text-[20px] font-medium leading-relaxed text-gray-300 word-keep">
+                                    한중 교류 재개로 K-뷰티·<br>K-라이프스타일 관심이 증가하며,<br>
+                                    동시에 중국 소비자의 방한,<br>소비가 빠르게 회복되고 있습니다.
+                                </p>
+                            </div>
+                            <!-- Stage 2 Right -->
+                            <div
+                                class="market-text-right-2 w-full absolute bottom-[48px] left-0 opacity-0 translate-y-8 md:pl-[60px]">
+                                <p class="text-[20px] font-medium leading-relaxed text-gray-300 word-keep">
+                                    중국 소비자는 브랜드 검색과 선택을 주로<br>샤오홍슈에서 진행합니다. 실제 샤오홍슈<br>
+                                    사용자 리뷰와 체험기가 구매 결정의 핵심으로<br>자리잡았습니다.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3D Star Icon (Stage 2) -->
+                    <!-- Top Right Star -->
+                    <div
+                        class="star-icon absolute top-[-5%] right-[25%] w-32 h-32 md:w-48 md:h-48 z-30 pointer-events-none">
+                        <img src="/star-icon.png" alt="Star Icon" class="w-full h-full object-contain animate-float">
+                    </div>
+
+                    <!-- Bottom Left Star (New) -->
+                    <div
+                        class="star-icon-2 absolute bottom-[10%] left-[25%] w-24 h-24 md:w-36 md:h-36 z-30 pointer-events-none">
+                        <img src="/star-icon.png" alt="Star Icon" class="w-full h-full object-contain animate-float"
+                            style="animation-delay: -3s;">
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <!-- Section 3: Why Zing (Pain Points) -->
+        <section class="w-full bg-transparent text-white px-6 py-32 md:py-48 flex flex-col items-center justify-center">
+            <div class="max-w-[1680px] w-full">
+                <!-- Header -->
+                <div class="text-center mb-20">
+                    <span class="block text-gray-400 font-bold uppercase tracking-widest mb-4">Why Zing</span>
+                    <h2 id="pain-points-title" class="text-4xl md:text-[56px] font-bold leading-tight tracking-tight">
+                        중국 마케팅, 이런 어려움<br>
+                        겪고 계시죠?
+                    </h2>
+                </div>
+
+                <!-- 3-Card Grid -->
+                <!-- Gap 20px = gap-[20px] -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-[20px]">
+
+                    <!-- Card 1 -->
+                    <div class="pain-point-card flex flex-col rounded-[32px] overflow-hidden">
+                        <!-- Image Area (Top) -->
+                        <div class="h-[300px] w-full relative">
+                            <img src="https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=1000&auto=format&fit=crop"
+                                class="w-full h-full object-cover" alt="Content Management">
+                            <div class="absolute inset-0 bg-black/10"></div>
+                        </div>
+                        <!-- Text Area (Bottom) - Dark Purple -->
+                        <div class="flex-1 bg-[#2E2140] p-10 flex flex-col items-start min-h-[300px]">
+                            <div
+                                class="bg-white text-black font-bold rounded-full w-10 h-10 flex items-center justify-center mb-6 text-sm">
+                                01</div>
+                            <h3 class="text-2xl font-bold mb-6 leading-snug">
+                                중국어 콘텐츠 관리와 현지 트렌드 파악이<br>
+                                어려우신가요?
+                            </h3>
+                            <p class="text-gray-300 leading-relaxed text-sm md:text-base opacity-80">
+                                전문적인 한국인 매니저와 중국인 마케터의 협업으로<br>
+                                높은 중국 마케팅 진입 장벽을 해결해 드려요.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="pain-point-card flex flex-col rounded-[32px] overflow-hidden">
+                        <!-- Image Area (Top) -->
+                        <div class="h-[300px] w-full relative">
+                            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000&auto=format&fit=crop"
+                                class="w-full h-full object-cover" alt="Creator Matching">
+                            <div class="absolute inset-0 bg-black/10"></div>
+                        </div>
+                        <!-- Text Area (Bottom) - Dark Navy -->
+                        <div class="flex-1 bg-[#1A253A] p-10 flex flex-col items-start min-h-[300px]">
+                            <div
+                                class="bg-white text-black font-bold rounded-full w-10 h-10 flex items-center justify-center mb-6 text-sm">
+                                02</div>
+                            <h3 class="text-2xl font-bold mb-6 leading-snug">
+                                브랜드에 적합한 크리에이터를 찾는게<br>
+                                어려우신가요?
+                            </h3>
+                            <p class="text-gray-300 leading-relaxed text-sm md:text-base opacity-80">
+                                100만 이상의 검증 네트워크, CPM 등급 관리 능력으로<br>
+                                믿을수 있고, 브랜드에 어울리는 크리에이터를 매칭해 드려요.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="pain-point-card flex flex-col rounded-[32px] overflow-hidden">
+                        <!-- Image Area (Top) -->
+                        <div class="h-[300px] w-full relative">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop"
+                                class="w-full h-full object-cover" alt="Performance Management">
+                            <div class="absolute inset-0 bg-black/10"></div>
+                        </div>
+                        <!-- Text Area (Bottom) - Dark Brown -->
+                        <div class="flex-1 bg-[#3D2521] p-10 flex flex-col items-start min-h-[300px]">
+                            <div
+                                class="bg-white text-black font-bold rounded-full w-10 h-10 flex items-center justify-center mb-6 text-sm">
+                                03</div>
+                            <h3 class="text-2xl font-bold mb-6 leading-snug">
+                                예산 대비 효과 측정과, 인플루언서 관리가<br>
+                                어려우신가요?
+                            </h3>
+                            <p class="text-gray-300 leading-relaxed text-sm md:text-base opacity-80">
+                                실시간 캠페인 대시보드, 단계별 진행 추적 기능으로<br>
+                                마케팅 효과과 인플루언서 관리를 스마트하게 해결해 드려요.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Brand Message -->
+        <section id="brand-message-section"
+            class="w-full bg-transparent text-white px-6 py-40 md:py-60 flex items-center justify-center overflow-hidden">
+            <div class="text-center max-w-[1680px] mx-auto z-10 relative">
+                <h2 id="brand-message-text"
+                    class="text-[40px] md:text-[80px] font-semibold leading-tight tracking-tight uppercase">
+                    POWERED BY
+                    <img src="/star-icon.png" alt="Star"
+                        class="inline-block w-[40px] md:w-[70px] align-middle mx-2 animate-spin-slow">
+                    ZING,<br>
+                    MAKE
+                    <img src="/star-icon.png" alt="Star"
+                        class="inline-block w-[40px] md:w-[70px] align-middle mx-2 animate-spin-slow"
+                        style="animation-delay: -1s;">
+                    TURN UP THE VOLUME<br>
+                    OF YOUR BRAND
+                </h2>
+            </div>
+        </section>
+
+    </main>
+    <footer class="bg-white pt-48 pb-20 px-6 md:px-[80px] border-t border-gray-100">
+        <div class="max-w-[1400px] mx-auto">
+            <div class="flex flex-col lg:flex-row justify-between gap-32 mb-40">
+                <div class="lg:w-1/3">
+                    <div class="text-4xl font-black text-brand-accent mb-12 font-poppins tracking-tighter">ZING
+                    </div>
+                    <p class="text-gray-400 font-bold text-lg leading-relaxed max-w-sm">
+                        K-브랜드의 중국 진출을 위한 최고의 파트너. 우리는 더 큰 시장을 향한 당신의 도전을 응원합니다.
+                    </p>
+                </div>
+                <div class="flex flex-wrap gap-24 lg:w-2/3 justify-end items-start text-center md:text-left">
+                    <div class="flex flex-wrap gap-24 opacity-30 grayscale items-center justify-center">
+                        <span class="text-2xl font-black italic">AMORE PACIFIC</span>
+                        <span class="text-2xl font-black italic">SAMSUNG</span>
+                        <span class="text-2xl font-black italic">LG HH</span>
+                        <span class="text-2xl font-black italic">MUSINSA</span>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="pt-20 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-12 text-[10px] font-black text-gray-300 uppercase tracking-[0.6em]">
+                <div>© ZING MINT CORP. ALL RIGHTS RESERVED.</div>
+                <div class="flex gap-16 tracking-[0.4em]">
+                    <a href="#" class="hover:text-brand-accent transition-colors">Terms</a>
+                    <a href="#" class="hover:text-brand-accent transition-colors">Privacy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Section 3: Why Zing Card Animation
+        ScrollTrigger.matchMedia({
+            // Desktop: Stack to Grid
+            "(min-width: 768px)": function () {
+                const cards = gsap.utils.toArray(".pain-point-card");
+
+                // Initial State: Stacked in center & hidden
+                gsap.set(cards, { y: 300, opacity: 0 });
+                gsap.set(cards[0], { xPercent: 105 }); // Move Right to Center
+                gsap.set(cards[2], { xPercent: -105 }); // Move Left to Center
+                gsap.set(cards[1], { xPercent: 0 });   // Center
+
+                const tl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: "#pain-points-title", // Trigger when title is in view
+                        start: "top 25%", // Start when title is well above center (top 25% of viewport)
+                        end: "bottom top",
+                        toggleActions: "play none none reverse"
+                    }
+                });
+
+                // Step 1: Appear & Move Up (Stacked)
+                tl.to(cards, {
+                    y: 0,
+                    opacity: 1,
+                    duration: 1.5, // Slower rise
+                    ease: "power3.out"
+                })
+                    // Step 2: Spread Out (Wait slightly, then spread)
+                    .to(cards[0], { xPercent: 0, duration: 0.8, ease: "power4.out" }, "+=0.1")
+                    .to(cards[2], { xPercent: 0, duration: 0.8, ease: "power4.out" }, "<");
+            },
+
+            // Mobile: Simple Stagger
+            "(max-width: 767px)": function () {
+                gsap.from(".pain-point-card", {
+                    scrollTrigger: {
+                        trigger: ".grid",
+                        start: "top 85%"
+                    },
+                    y: 50,
+                    opacity: 0,
+                    duration: 0.8,
+                    stagger: 0.2,
+                    ease: "power2.out"
+                });
+            }
+        });
+
+        const header = document.getElementById('header');
+        ScrollTrigger.create({
+            trigger: "body",
+            start: "50 top",
+            onEnter: () => header.classList.add('py-4', 'bg-brand-black/80', 'backdrop-blur-md', 'shadow-sm'),
+            onLeaveBack: () => header.classList.remove('py-4', 'bg-brand-black/80', 'backdrop-blur-md', 'shadow-sm')
+        });
+
+        let lastScrollY = window.scrollY;
+        window.addEventListener("scroll", () => {
+            const currentScrollY = window.scrollY;
+            if (currentScrollY > lastScrollY && currentScrollY > 10) {
+                // Scroll Down -> Hide
+                header.style.transform = "translateY(-100%)";
+            } else {
+                // Scroll Up -> Show
+                header.style.transform = "translateY(0)";
+            }
+            lastScrollY = currentScrollY;
+        });
+
+        // Market Section Animation
+        document.addEventListener("DOMContentLoaded", (event) => {
+            // Re-register if needed, or ensure scope
+
+            let tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#market-section",
+                    start: "center center",
+                    end: "+=200%",
+                    scrub: 1,
+                    pin: true,
+                    anticipatePin: 1
+                }
+            });
+
+            // Hold phase: Wait for user to see content before animating
+            tl.to({}, { duration: 1 });
+
+            // Transition: Stage 1 Out -> Stage 2 In
+            tl.to(".market-text-left-1", { opacity: 0, y: -20, duration: 2 })
+                .to(".market-text-right-1", { opacity: 0, y: -20, duration: 2 }, "<")
+                .to(".market-img-2", { y: "0%", ease: "power2.inOut", duration: 3 }, "<")
+
+                .to(".market-text-left-2", { opacity: 1, y: 0, duration: 2 }, "-=1")
+                .to(".market-text-right-2", { opacity: 1, y: 0, duration: 2 }, "<");
+        });
+
+        // Ensure triggers refresh
+        window.addEventListener('load', () => {
+            // Background Color Transition (Black -> White)
+            // Moved here to ensure layout (pinning) is fully calculated
+            // Background Color Transition (Global Body Scrub)
+            // 1. Ensure Section 4 is transparent so Body bg shows through
+            // 2. Ensure Body starts Black (matching Section 3)
+            gsap.set("#brand-message-section", { backgroundColor: "transparent" });
+            gsap.set("body", { backgroundColor: "#000000" });
+
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#brand-message-section",
+                    start: "top bottom", // Start when section enters from bottom
+                    end: "bottom bottom", // End when section bottom hits bottom of screen
+                    scrub: true
+                }
+            })
+                // Animate Body Black -> White
+                .fromTo("body", { backgroundColor: "#000000" }, { backgroundColor: "#ffffff", ease: "none" })
+                // Animate Text White -> Black
+                .to("#brand-message-text", { color: "#000000", ease: "none" }, "<");
+
+            ScrollTrigger.refresh();
+        });
+    </script>
+</body>
+
+</html>
