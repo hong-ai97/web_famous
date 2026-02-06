@@ -149,6 +149,27 @@
             }
         }
 
+        /* CTA Button Gradient Animation */
+        @keyframes gradient-flow {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .cta-button-gradient {
+            background: linear-gradient(90deg, #51EC91, #0668FA, #51EC91, #0668FA);
+            background-size: 300% 100%;
+            animation: gradient-flow 10s ease infinite;
+        }
+
         @keyframes float {
 
             0%,
@@ -224,27 +245,29 @@
 
     <main>
         <!-- Section 1: Hero Discovery (New Design) -->
-        <section id="hero-section" class="relative w-full h-screen min-h-[800px] bg-cover bg-center flex items-center"
-            style="background-image: url('./assets/images/hero-bg-paint.png');">
-            <!-- Overlay not needed if image is dark enough, but based on reference, text is white on painted BG. -->
+        <section id="hero-section" class="relative w-full h-screen min-h-[800px] flex items-center overflow-hidden">
+            <!-- Background Video -->
+            <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-0">
+                <source src="./assets/images/main.mp4" type="video/mp4">
+            </video>
 
-            <div class="w-full px-6 md:px-[80px] mt-20"> <!-- mt-20 to offset fixed header -->
+            <!-- Dimmed Overlay -->
+            <div class="absolute inset-0 bg-black/50 z-[5]"></div>
+
+            <div class="relative z-10 w-full px-6 md:px-[80px] mt-20"> <!-- mt-20 to offset fixed header -->
                 <div class="max-w-[1600px]">
                     <h1
                         class="text-[clamp(3.5rem,8.5vw,160px)] font-black leading-[0.95] tracking-tighter text-white mb-12 font-poppins">
-                        WE CREATE<br>
-                        BRILLIANT<br>
-                        EXPERIENCES
+                        POWERED BY<br>
+                        ZING, MARKETING<br>
+                        CHINA
                     </h1>
                     <p class="text-white/90 text-lg md:text-2xl font-bold leading-relaxed max-w-2xl">
-                        안내 문구 징은 어떤어떤걸 하는<br>
-                        회사이며 세줄정도가 들어가면 좋을듯요<br>
-                        암튼 텍스트입니다
+                        ZING(징). 중국 시장, 지금 울려 퍼트린다<br>
+                        한국기업을 위한 중국 인플루언서 마케팅 솔루션
                     </p>
                 </div>
             </div>
-
-            <!-- Optional: Keep scroll hint if desired, but image didn't have it. I'll remove it to be strict. -->
         </section>
 
         <!-- Section 2: Market Context (New Design - Black Theme) -->
@@ -277,15 +300,14 @@
                         class="col-start-1 col-span-12 md:col-start-5 md:col-span-4 relative z-10 flex justify-center h-[580px]">
                         <div class="w-[546px] h-[580px] relative rounded-[40px] overflow-hidden">
                             <!-- Stage 1 Image -->
-                            <div class="market-img-1 absolute inset-0 w-full h-full">
-                                <img src="https://images.unsplash.com/photo-1553729459-efe14ef6055d?q=80&w=2000&auto=format&fit=crop"
-                                    class="w-full h-full object-cover" alt="Golden Age">
-                                <div class="absolute inset-0 bg-black/20"></div>
+                            <div class="market-img-1 absolute inset-0 w-full h-full bg-white">
+                                <img src="./assets/images/market-1.jpg"
+                                    class="w-full h-full object-cover brightness-110 contrast-105" alt="Golden Age">
                             </div>
                             <!-- Stage 2 Image (Covers Stage 1) -->
                             <div class="market-img-2 absolute inset-0 w-full h-full translate-y-[110%] bg-white">
-                                <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=2000&auto=format&fit=crop"
-                                    class="w-full h-full object-cover" alt="Xiaohongshu">
+                                <img src="./assets/images/market-2.png" class="w-full h-full object-cover"
+                                    alt="Xiaohongshu">
                             </div>
                         </div>
                     </div>
@@ -361,21 +383,20 @@
                     <!-- Card 1 -->
                     <div class="pain-point-card flex flex-col rounded-[32px] overflow-hidden">
                         <!-- Image Area (Top) -->
-                        <div class="h-[300px] w-full relative">
-                            <img src="https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=1000&auto=format&fit=crop"
-                                class="w-full h-full object-cover" alt="Content Management">
-                            <div class="absolute inset-0 bg-black/10"></div>
+                        <div class="h-[360px] w-full relative">
+                            <img src="./assets/images/why-1.png" class="w-full h-full object-cover"
+                                alt="Content Management">
                         </div>
                         <!-- Text Area (Bottom) - Dark Purple -->
-                        <div class="flex-1 bg-[#2E2140] p-10 flex flex-col items-start min-h-[300px]">
+                        <div class="flex-1 bg-[#3D194E] p-10 flex flex-col items-start min-h-[300px]">
                             <div
-                                class="bg-white text-black font-bold rounded-full w-10 h-10 flex items-center justify-center mb-6 text-sm">
+                                class="bg-white text-black font-bold rounded-full w-10 h-10 flex items-center justify-center mb-4 text-sm">
                                 01</div>
                             <h3 class="text-2xl font-bold mb-6 leading-snug">
                                 중국어 콘텐츠 관리와 현지 트렌드 파악이<br>
                                 어려우신가요?
                             </h3>
-                            <p class="text-gray-300 leading-relaxed text-sm md:text-base opacity-80">
+                            <p class="text-gray-300 leading-relaxed text-[18px] opacity-80">
                                 전문적인 한국인 매니저와 중국인 마케터의 협업으로<br>
                                 높은 중국 마케팅 진입 장벽을 해결해 드려요.
                             </p>
@@ -385,23 +406,22 @@
                     <!-- Card 2 -->
                     <div class="pain-point-card flex flex-col rounded-[32px] overflow-hidden">
                         <!-- Image Area (Top) -->
-                        <div class="h-[300px] w-full relative">
-                            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000&auto=format&fit=crop"
-                                class="w-full h-full object-cover" alt="Creator Matching">
-                            <div class="absolute inset-0 bg-black/10"></div>
+                        <div class="h-[360px] w-full relative">
+                            <img src="./assets/images/why-2.png" class="w-full h-full object-cover"
+                                alt="Creator Matching">
                         </div>
-                        <!-- Text Area (Bottom) - Dark Navy -->
-                        <div class="flex-1 bg-[#1A253A] p-10 flex flex-col items-start min-h-[300px]">
+                        <!-- Text Area (Bottom) - Dark Red/Brown -->
+                        <div class="flex-1 bg-[#521E20] p-10 flex flex-col items-start min-h-[300px]">
                             <div
-                                class="bg-white text-black font-bold rounded-full w-10 h-10 flex items-center justify-center mb-6 text-sm">
+                                class="bg-white text-black font-bold rounded-full w-10 h-10 flex items-center justify-center mb-4 text-sm">
                                 02</div>
                             <h3 class="text-2xl font-bold mb-6 leading-snug">
                                 브랜드에 적합한 크리에이터를 찾는게<br>
                                 어려우신가요?
                             </h3>
-                            <p class="text-gray-300 leading-relaxed text-sm md:text-base opacity-80">
+                            <p class="text-gray-300 leading-relaxed text-[18px] opacity-80">
                                 100만 이상의 검증 네트워크, CPM 등급 관리 능력으로<br>
-                                믿을수 있고, 브랜드에 어울리는 크리에이터를 매칭해 드려요.
+                                믿을 수 있고, 브랜드에 어울리는 크리에이터를 매칭해 드려요.
                             </p>
                         </div>
                     </div>
@@ -409,23 +429,22 @@
                     <!-- Card 3 -->
                     <div class="pain-point-card flex flex-col rounded-[32px] overflow-hidden">
                         <!-- Image Area (Top) -->
-                        <div class="h-[300px] w-full relative">
-                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop"
-                                class="w-full h-full object-cover" alt="Performance Management">
-                            <div class="absolute inset-0 bg-black/10"></div>
+                        <div class="h-[360px] w-full relative">
+                            <img src="./assets/images/why-3.png" class="w-full h-full object-cover"
+                                alt="Performance Management">
                         </div>
-                        <!-- Text Area (Bottom) - Dark Brown -->
-                        <div class="flex-1 bg-[#3D2521] p-10 flex flex-col items-start min-h-[300px]">
+                        <!-- Text Area (Bottom) - Dark Navy -->
+                        <div class="flex-1 bg-[#0F1A33] p-10 flex flex-col items-start min-h-[300px]">
                             <div
-                                class="bg-white text-black font-bold rounded-full w-10 h-10 flex items-center justify-center mb-6 text-sm">
+                                class="bg-white text-black font-bold rounded-full w-10 h-10 flex items-center justify-center mb-4 text-sm">
                                 03</div>
                             <h3 class="text-2xl font-bold mb-6 leading-snug">
                                 예산 대비 효과 측정과, 인플루언서 관리가<br>
                                 어려우신가요?
                             </h3>
-                            <p class="text-gray-300 leading-relaxed text-sm md:text-base opacity-80">
+                            <p class="text-gray-300 leading-relaxed text-[18px] opacity-80">
                                 실시간 캠페인 대시보드, 단계별 진행 추적 기능으로<br>
-                                마케팅 효과과 인플루언서 관리를 스마트하게 해결해 드려요.
+                                마케팅 효과와 인플루언서 관리를 스마트하게 해결해 드려요.
                             </p>
                         </div>
                     </div>
@@ -434,25 +453,6 @@
             </div>
         </section>
 
-        <!-- Section 4: Brand Message -->
-        <section id="brand-message-section"
-            class="w-full bg-transparent text-white px-6 py-[180px] flex items-center justify-center overflow-hidden">
-            <div class="text-center max-w-[1680px] mx-auto z-10 relative">
-                <h2 id="brand-message-text"
-                    class="text-[40px] md:text-[96px] font-extrabold leading-tight tracking-tight uppercase">
-                    POWERED BY
-                    <img src="./assets/images/star-icon.png" alt="Star"
-                        class="inline-block w-[40px] md:w-[70px] align-middle mx-2 animate-spin-slow">
-                    ZING,<br>
-                    MAKE
-                    <img src="./assets/images/star-icon.png" alt="Star"
-                        class="inline-block w-[40px] md:w-[70px] align-middle mx-2 animate-spin-slow"
-                        style="animation-delay: -1s;">
-                    TURN UP THE VOLUME<br>
-                    OF YOUR BRAND
-                </h2>
-            </div>
-        </section>
 
         <!-- Section 5: Our Service -->
         <section id="service-section" class="w-full bg-transparent text-black px-6 py-[140px]">
@@ -487,15 +487,15 @@
 
                         <!-- Content -->
                         <div class="space-y-4 z-10 relative">
-                            <div class="flex border-b border-white/20 pb-4">
+                            <div class="flex border-b border-white/20 pb-4 text-[18px]">
                                 <span class="w-24 md:w-32 font-bold opacity-80 shrink-0">대상</span>
                                 <span>팔로워 1만 이하</span>
                             </div>
-                            <div class="flex border-b border-white/20 pb-4">
+                            <div class="flex border-b border-white/20 pb-4 text-[18px]">
                                 <span class="w-24 md:w-32 font-bold opacity-80 shrink-0">추천인원</span>
                                 <span>20~50명/월</span>
                             </div>
-                            <div class="flex">
+                            <div class="flex text-[18px]">
                                 <span class="w-24 md:w-32 font-bold opacity-80 shrink-0">효과</span>
                                 <span>검색 상단 점령 (키워드 도배),<br>대량 콘텐츠 확보 (가성비 최적)</span>
                             </div>
@@ -520,15 +520,15 @@
 
                         <!-- Content -->
                         <div class="space-y-4 z-10 relative">
-                            <div class="flex border-b border-white/20 pb-4">
+                            <div class="flex border-b border-white/20 pb-4 text-[18px]">
                                 <span class="w-24 md:w-32 font-bold opacity-80 shrink-0">대상</span>
                                 <span>팔로워 1만 이상</span>
                             </div>
-                            <div class="flex border-b border-white/20 pb-4">
+                            <div class="flex border-b border-white/20 pb-4 text-[18px]">
                                 <span class="w-24 md:w-32 font-bold opacity-80 shrink-0">추천인원</span>
                                 <span>5~15명/월</span>
                             </div>
-                            <div class="flex">
+                            <div class="flex text-[18px]">
                                 <span class="w-24 md:w-32 font-bold opacity-80 shrink-0">효과</span>
                                 <span>브랜드 신뢰도 급상승(팬덤 효과),<br>구매 전환 유도(고퀄리티 리뷰)</span>
                             </div>
@@ -547,11 +547,12 @@
                 <div class="mb-20 text-left">
                     <span class="block text-gray-400 text-sm font-bold uppercase tracking-[0] mb-6">Scenario</span>
                     <h2 class="text-4xl md:text-[56px] font-extrabold leading-tight tracking-tight mb-8 text-black">
-                        인기있는 조합 시나리오를<br>
-                        추천해 드려요
+                        브랜드 예산에 맞춘<br>
+                        맞춤 비용을 제안해드려요.
                     </h2>
                     <p class="text-lg text-gray-600 leading-relaxed word-keep">
-                        합리적인 비용으로 최대의 효과를 만들어 드립니다.
+                        인기있는 시나리오를 추천해드려요.<br>
+                        합리적인 비용으로 최대의 효과를 만들어드립니다.
                     </p>
                 </div>
 
@@ -664,76 +665,79 @@
                 <!-- Right Column: 2x2 Grid -->
                 <!-- Connecting Line Container -->
                 <!-- Shifted to start from col 5 (creating a 1-col gap after title) -->
-                <!-- Shifted to start from col 5 (creating a 1-col gap after title) -->
-                <!-- Reduced to col-span-7 (leaving col 12 empty) for right-side gap -->
-                <!-- Added Flex + w-fit wrapper to remove side margins -->
-                <!-- Aligned to Right End as requested -->
-                <div class="col-span-1 md:col-start-5 md:col-span-7 relative flex justify-end">
-                    <div class="relative w-fit pr-16">
-                        <!-- S-Curve / Connection Line Background -->
-                        <div class="absolute inset-0 hidden md:block pointer-events-none z-0">
-                            <!-- Top Row Horizontal (TL -> TR -> Right) -->
+                <div class="col-span-1 md:col-start-6 md:col-span-6 relative">
+                    <!-- S-Curve / Connection Line Background -->
+                    <!-- S-Curve / Connection Line Background -->
+                    <div class="absolute inset-0 hidden md:block pointer-events-none z-0">
+                        <!-- Combined Connecting Line with Rounded Corners (R=32px) -->
+                        <div
+                            class="absolute top-[108px] bottom-[192px] left-[25%] right-[20px] border-t-2 border-r-2 border-b-2 border-dashed border-gray-300 rounded-tr-[32px] rounded-br-[32px] pointer-events-none">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16 relative z-10">
+                        <!-- Step 1: Free Consultation (Green) - TL -->
+                        <div class="flex flex-col items-center text-center md:order-1 max-w-[280px] mx-auto">
                             <div
-                                class="absolute top-[100px] left-[25%] right-0 h-[2px] border-t-2 border-dashed border-gray-300">
+                                class="w-[240px] h-[240px] bg-[#99D98C] rounded-full flex items-center justify-center mb-6 shadow-inner relative z-10">
+                                <img src="./assets/images/process-1.png" class="w-24 h-24 object-contain relative z-20"
+                                    alt="Consultation">
                             </div>
-                            <!-- Vertical Line Right (Right Edge) -->
-                            <div
-                                class="absolute top-[100px] bottom-[100px] right-0 w-[2px] border-r-2 border-dashed border-gray-300">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="bg-[#FE3262] text-white text-xs font-bold px-3 py-1 rounded-full">01</span>
+                                <h3 class="text-2xl font-bold">무료 상담</h3>
                             </div>
-                            <!-- Bottom Row Horizontal (Right -> BR -> BL) -->
-                            <div
-                                class="absolute bottom-[100px] left-[25%] right-0 h-[2px] border-t-2 border-dashed border-gray-300">
-                            </div>
+                            <p class="text-gray-500 font-medium leading-relaxed word-keep text-[15px]">
+                                브랜드 진단, 초기 전략, 예산 안내
+                            </p>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16 relative z-10">
-                            <!-- Step 1: Free Consultation (Green) - TL -->
-                            <div class="flex flex-col items-center text-center md:order-1">
-                                <div
-                                    class="w-[200px] h-[200px] bg-[#99D98C] rounded-full flex items-center justify-center mb-6 shadow-inner relative z-10">
-                                    <!-- Icon Placeholder -->
-                                </div>
-                                <h3 class="text-2xl font-bold mb-2">무료 상담</h3>
-                                <p class="text-gray-500 font-medium leading-relaxed word-keep text-sm">브랜드 진단, 초기 전략, 예산
-                                    안내
-                                </p>
+                        <!-- Step 2: Consulting (Blue) - TR -->
+                        <div class="flex flex-col items-center text-center md:order-2 max-w-[280px] mx-auto">
+                            <div
+                                class="w-[240px] h-[240px] bg-[#2F80ED] rounded-full flex items-center justify-center mb-6 shadow-inner relative z-10">
+                                <img src="./assets/images/process-2.png" class="w-24 h-24 object-contain relative z-20"
+                                    alt="Strategy">
                             </div>
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="bg-[#FE3262] text-white text-xs font-bold px-3 py-1 rounded-full">02</span>
+                                <h3 class="text-2xl font-bold">컨설팅</h3>
+                            </div>
+                            <p class="text-gray-500 font-medium leading-relaxed word-keep text-[15px]">
+                                타겟 분석, 전략 수집, 크리에이터
+                                기준 협의</p>
+                        </div>
 
-                            <!-- Step 2: Consulting (Blue) - TR -->
-                            <div class="flex flex-col items-center text-center md:order-2">
-                                <div
-                                    class="w-[200px] h-[200px] bg-[#2F80ED] rounded-full flex items-center justify-center mb-6 shadow-inner relative z-10">
-                                    <!-- Icon Placeholder -->
-                                </div>
-                                <h3 class="text-2xl font-bold mb-2">컨설팅</h3>
-                                <p class="text-gray-500 font-medium leading-relaxed word-keep text-sm">타겟 분석, 전략 수집,
-                                    크리에이터
-                                    기준 협의</p>
+                        <!-- Step 4: Result Report (Purple) - BL (Snake End) -->
+                        <div class="flex flex-col items-center text-center md:order-3 max-w-[280px] mx-auto">
+                            <div
+                                class="w-[240px] h-[240px] bg-[#9B51E0] rounded-full flex items-center justify-center mb-6 shadow-inner relative z-10">
+                                <img src="./assets/images/process-4.png" class="w-24 h-24 object-contain relative z-20"
+                                    alt="Report">
                             </div>
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="bg-[#FE3262] text-white text-xs font-bold px-3 py-1 rounded-full">04</span>
+                                <h3 class="text-2xl font-bold">결과 보고</h3>
+                            </div>
+                            <p class="text-gray-500 font-medium leading-relaxed word-keep text-[15px]">
+                                조회수·참여율 분석, ROI 개선,
+                                다음 전략 수립</p>
+                        </div>
 
-                            <!-- Step 4: Result Report (Purple) - BL (Snake End) -->
-                            <div class="flex flex-col items-center text-center md:order-3">
-                                <div
-                                    class="w-[200px] h-[200px] bg-[#9B51E0] rounded-full flex items-center justify-center mb-6 shadow-inner relative z-10">
-                                    <!-- Icon Placeholder -->
-                                </div>
-                                <h3 class="text-2xl font-bold mb-2">결과 보고</h3>
-                                <p class="text-gray-500 font-medium leading-relaxed word-keep text-sm">조회수·참여율 분석, ROI
-                                    개선,
-                                    다음 전략 수립</p>
+                        <!-- Step 3: Campaign Execution (Yellow) - BR (Snake Turn) -->
+                        <div class="flex flex-col items-center text-center md:order-4 max-w-[280px] mx-auto">
+                            <div
+                                class="w-[240px] h-[240px] bg-[#F4C430] rounded-full flex items-center justify-center mb-6 shadow-inner relative z-10">
+                                <img src="./assets/images/process-3.png" class="w-24 h-24 object-contain relative z-20"
+                                    alt="Execution">
                             </div>
-
-                            <!-- Step 3: Campaign Execution (Yellow) - BR (Snake Turn) -->
-                            <div class="flex flex-col items-center text-center md:order-4">
-                                <div
-                                    class="w-[200px] h-[200px] bg-[#F4C430] rounded-full flex items-center justify-center mb-6 shadow-inner relative z-10">
-                                    <!-- Icon Placeholder -->
-                                </div>
-                                <h3 class="text-2xl font-bold mb-2">캠페인 실행</h3>
-                                <p class="text-gray-500 font-medium leading-relaxed word-keep text-sm">섭외·계약, 콘텐츠 관리,
-                                    일정·품질
-                                    통제</p>
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="bg-[#FE3262] text-white text-xs font-bold px-3 py-1 rounded-full">03</span>
+                                <h3 class="text-2xl font-bold">캠페인 실행</h3>
                             </div>
+                            <p class="text-gray-500 font-medium leading-relaxed word-keep text-[15px]">
+                                섭외·계약, 콘텐츠 관리, 일정·품질
+                                통제</p>
                         </div>
                     </div>
                 </div>
@@ -744,88 +748,87 @@
 
     <!-- Section 8: With Us -->
     <section id="with-us-section" class="w-full bg-transparent text-black px-6 py-[140px]">
-        <div class="max-w-[1280px] mx-auto">
-            <!-- Header -->
-            <div class="mb-20 text-center with-us-text-group">
-                <span class="block text-gray-400 text-sm font-bold uppercase tracking-[0] mb-6">With Us</span>
-                <h2 class="text-4xl md:text-[56px] font-extrabold leading-tight tracking-tight mb-8">
-                    ZING과 함께 시작하세요
-                </h2>
-                <p class="text-lg text-gray-600 leading-relaxed word-keep description-text">
-                    ZING은 디지털 크리에이티브 그룹 이트라이브의 중국 마케팅 전문 조직으로,<br>
-                    한국인 매니저와 중국인 마케터가 하나의 팀으로 협업하는 시스템입니다.
-                </p>
-            </div>
-
-            <!-- Stats Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-32">
-                <!-- Stat 1 -->
-                <div
-                    class="stat-card bg-[#F9F9F9] rounded-[40px] p-16 text-center group hover:bg-[#FE3262] transition-all duration-500 shadow-[0_20px_40px_rgba(0,0,0,0.05)] hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(254,50,98,0.3)]">
-                    <div
-                        class="text-[80px] md:text-[100px] font-black text-[#FE3262] mb-4 group-hover:text-white transition-colors duration-500 leading-none tracking-tighter">
-                        20<span class="text-4xl md:text-[50px] ml-2 align-baseline tracking-normal">년</span>
-                    </div>
-                    <div
-                        class="stat-text text-2xl md:text-3xl font-bold text-gray-800 group-hover:text-white transition-colors duration-500">
-                        의 노하우
-                    </div>
+        <div class="max-w-[1680px] mx-auto">
+            <!-- Header & Stats Row -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center mb-32">
+                <!-- Left: Header -->
+                <div class="col-span-1 md:col-span-6">
+                    <span class="block text-gray-400 text-sm font-bold uppercase tracking-[0] mb-6">With Us</span>
+                    <h2 class="text-4xl md:text-[56px] font-extrabold leading-tight tracking-tight mb-8">
+                        ZING과 함께<br>시작하세요
+                    </h2>
+                    <p class="text-lg text-gray-600 leading-relaxed word-keep description-text">
+                        ZING은 디지털 크리에이티브 그룹 이트라이브의 중국 마케팅 전문 조직으로,<br>
+                        한국인 매니저와 중국인 마케터가 하나의 팀으로 협업하는 시스템입니다.
+                    </p>
                 </div>
 
-                <!-- Stat 2 -->
+                <!-- Right: Stats (No Box) -->
                 <div
-                    class="stat-card bg-[#F9F9F9] rounded-[40px] p-16 text-center group hover:bg-[#FE3262] transition-all duration-500 shadow-[0_20px_40px_rgba(0,0,0,0.05)] hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(254,50,98,0.3)]">
-                    <div
-                        class="text-[80px] md:text-[100px] font-black text-[#FE3262] mb-4 group-hover:text-white transition-colors duration-500 leading-none tracking-tighter">
-                        177<span class="text-4xl md:text-[50px] ml-2 align-baseline tracking-normal">명</span>
+                    class="col-span-1 md:col-start-7 md:col-span-5 flex flex-row justify-center items-center gap-12 md:gap-32 text-center">
+                    <!-- Stat 1 -->
+                    <div class="stat-card-new group">
+                        <div
+                            class="text-[80px] md:text-[140px] font-black text-[#FE3262] leading-none tracking-tighter mb-4 transition-colors duration-500">
+                            20<span class="text-3xl md:text-[40px] ml-2 align-baseline tracking-normal">년</span>
+                        </div>
+                        <div
+                            class="stat-text text-xl md:text-2xl font-bold text-gray-400 transition-colors duration-500">
+                            의 노하우
+                        </div>
                     </div>
-                    <div
-                        class="stat-text text-2xl md:text-3xl font-bold text-gray-800 group-hover:text-white transition-colors duration-500">
-                        의 전문가
+                    <!-- Stat Divider -->
+                    <div id="stat-divider"
+                        class="block w-[2px] min-w-[2px] flex-shrink-0 h-32 bg-[#DDDDDD] self-center opacity-100">
+                    </div>
+                    <!-- Stat 2 -->
+                    <div class="stat-card-new group">
+                        <div
+                            class="text-[80px] md:text-[140px] font-black text-[#FE3262] leading-none tracking-tighter mb-4 transition-colors duration-500">
+                            177<span class="text-3xl md:text-[40px] ml-2 align-baseline tracking-normal">명</span>
+                        </div>
+                        <div
+                            class="stat-text text-xl md:text-2xl font-bold text-gray-400 transition-colors duration-500">
+                            의 전문가
+                        </div>
                     </div>
                 </div>
             </div>
+
 
             <!-- Team Section -->
             <div class="text-center">
-
                 <!-- 6 Image Grid -->
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-                    <!-- Placeholder 1 -->
+                <div class="flex flex-wrap justify-center gap-[16px]">
+                    <!-- Image 1 -->
                     <div
-                        class="team-card aspect-square bg-[#F0F0F0] rounded-[24px] overflow-hidden relative shadow-sm hover:scale-[1.05] transition-transform duration-300">
-                        <div class="absolute inset-0 flex items-center justify-center text-gray-300 font-bold">Image 1
-                        </div>
+                        class="team-card w-[266px] h-[364px] bg-[#1e1e1e] rounded-[24px] overflow-hidden relative shadow-sm hover:scale-[1.05] transition-transform duration-300">
+                        <img src="./assets/images/team/team-1.png" class="w-full h-full object-cover" alt="Team 1">
                     </div>
-                    <!-- Placeholder 2 -->
+                    <!-- Image 2 -->
                     <div
-                        class="team-card aspect-square bg-[#F0F0F0] rounded-[24px] overflow-hidden relative shadow-sm hover:scale-[1.05] transition-transform duration-300">
-                        <div class="absolute inset-0 flex items-center justify-center text-gray-300 font-bold">Image 2
-                        </div>
+                        class="team-card w-[266px] h-[364px] bg-[#1e1e1e] rounded-[24px] overflow-hidden relative shadow-sm hover:scale-[1.05] transition-transform duration-300">
+                        <img src="./assets/images/team/team-2.png" class="w-full h-full object-cover" alt="Team 2">
                     </div>
-                    <!-- Placeholder 3 -->
+                    <!-- Image 3 -->
                     <div
-                        class="team-card aspect-square bg-[#F0F0F0] rounded-[24px] overflow-hidden relative shadow-sm hover:scale-[1.05] transition-transform duration-300">
-                        <div class="absolute inset-0 flex items-center justify-center text-gray-300 font-bold">Image 3
-                        </div>
+                        class="team-card w-[266px] h-[364px] bg-[#1e1e1e] rounded-[24px] overflow-hidden relative shadow-sm hover:scale-[1.05] transition-transform duration-300">
+                        <img src="./assets/images/team/team-3.png" class="w-full h-full object-cover" alt="Team 3">
                     </div>
-                    <!-- Placeholder 4 -->
+                    <!-- Image 4 -->
                     <div
-                        class="team-card aspect-square bg-[#F0F0F0] rounded-[24px] overflow-hidden relative shadow-sm hover:scale-[1.05] transition-transform duration-300">
-                        <div class="absolute inset-0 flex items-center justify-center text-gray-300 font-bold">Image 4
-                        </div>
+                        class="team-card w-[266px] h-[364px] bg-[#1e1e1e] rounded-[24px] overflow-hidden relative shadow-sm hover:scale-[1.05] transition-transform duration-300">
+                        <img src="./assets/images/team/team-4.png" class="w-full h-full object-cover" alt="Team 4">
                     </div>
-                    <!-- Placeholder 5 -->
+                    <!-- Image 5 -->
                     <div
-                        class="team-card aspect-square bg-[#F0F0F0] rounded-[24px] overflow-hidden relative shadow-sm hover:scale-[1.05] transition-transform duration-300">
-                        <div class="absolute inset-0 flex items-center justify-center text-gray-300 font-bold">Image 5
-                        </div>
+                        class="team-card w-[266px] h-[364px] bg-[#1e1e1e] rounded-[24px] overflow-hidden relative shadow-sm hover:scale-[1.05] transition-transform duration-300">
+                        <img src="./assets/images/team/team-5.png" class="w-full h-full object-cover" alt="Team 5">
                     </div>
-                    <!-- Placeholder 6 -->
+                    <!-- Image 6 -->
                     <div
-                        class="team-card aspect-square bg-[#F0F0F0] rounded-[24px] overflow-hidden relative shadow-sm hover:scale-[1.05] transition-transform duration-300">
-                        <div class="absolute inset-0 flex items-center justify-center text-gray-300 font-bold">Image 6
-                        </div>
+                        class="team-card w-[266px] h-[364px] bg-[#1e1e1e] rounded-[24px] overflow-hidden relative shadow-sm hover:scale-[1.05] transition-transform duration-300">
+                        <img src="./assets/images/team/team-6.png" class="w-full h-full object-cover" alt="Team 6">
                     </div>
                 </div>
             </div>
@@ -879,13 +882,27 @@
                 망설이는 순간, 경쟁사는 이미 그 자리를 차지하고 있습니다.
             </p>
 
-            <a href="#contact-section"
-                class="inline-flex items-center gap-2 bg-gradient-to-r from-[#4ADE80] to-[#2DD4BF] hover:opacity-90 text-black font-bold text-lg px-12 py-5 rounded-full transition-all duration-300 transform hover:scale-105 shadow-[0_0_30px_rgba(74,222,128,0.4)]">
-                문의하기
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path
-                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
+            <a href="#contact"
+                class="cta-button-gradient inline-flex items-center gap-4 text-black font-extrabold text-[22px] px-8 py-4 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg group">
+                <span class="uppercase">문의하기</span>
+                <!-- Icon Container -->
+                <div class="w-[30px] h-[30px] relative flex items-center justify-center">
+                    <!-- Spinning Star -->
+                    <svg class="w-full h-full text-white animate-[spin_6s_linear_infinite]" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"></path>
+                    </svg>
+                    <!-- Pinging Dots Container -->
+                    <div
+                        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] pointer-events-none">
+                        <span
+                            class="absolute w-[8px] h-[8px] top-[10%] left-[20%] bg-[#fbbf24] rounded-full animate-[ping_2s_infinite]"></span>
+                        <span
+                            class="absolute w-[6px] h-[6px] bottom-[10%] right-[20%] bg-[#fbbf24] rounded-full animate-[ping_2s_infinite_0.7s]"></span>
+                        <span
+                            class="absolute w-[7px] h-[7px] top-[50%] right-[0%] bg-[#fbbf24] rounded-full animate-[ping_2s_infinite_1.3s]"></span>
+                    </div>
+                </div>
             </a>
         </div>
     </section>
@@ -1022,50 +1039,35 @@
         // Ensure triggers refresh
         window.addEventListener('load', () => {
             // Background Color Transition (Black -> White)
-            // Moved here to ensure layout (pinning) is fully calculated
-            // Background Color Transition (Global Body Scrub)
-            // 1. Ensure Section 4 is transparent so Body bg shows through
-            // 2. Ensure Body starts Black (matching Section 3)
-            gsap.set("#brand-message-section", { backgroundColor: "transparent" });
-            gsap.set("body", { backgroundColor: "#000000" });
-
+            // Triggered when moving from Why Zing to Our Service
             gsap.timeline({
                 scrollTrigger: {
-                    trigger: "#brand-message-text",
-                    start: "top 80%", // Start early: when text enters bottom 20% of screen
-                    end: "top 20%", // End early: when text reaches top 20% of screen
+                    trigger: "#service-section",
+                    start: "top 95%",
+                    end: "top 40%",
                     scrub: true
                 }
             })
-                // Animate Body Black -> White
-                .fromTo("body", { backgroundColor: "#000000" }, { backgroundColor: "#ffffff", ease: "none" })
-                // Animate Text White -> Black
-                .to("#brand-message-text", { color: "#000000", ease: "none" }, "<");
+                .fromTo("body", { backgroundColor: "#000000" }, { backgroundColor: "#ffffff", ease: "none" });
 
             // With Us Section Transition (White -> Black)
             gsap.timeline({
                 scrollTrigger: {
                     trigger: "#with-us-section",
-                    start: "top 45%", // When section hits middle-ish
+                    start: "top 45%",
                     end: "top 10%",
                     scrub: true
                 }
             })
-                // Body to Black
                 .to("body", { backgroundColor: "#000000", ease: "none" })
-                // Section Text to White
                 .to("#with-us-section", { color: "#ffffff", ease: "none" }, "<")
-                // Stats Title to White
-                .to("#with-us-section h2", { color: "#ffffff", ease: "none" }, "<")
-                // Description to Gray-300
                 .to(".description-text", { color: "#d1d5db", ease: "none" }, "<")
-                // Team description to White
                 .to(".team-desc-text", { color: "#ffffff", ease: "none" }, "<")
-                // Cards to Dark Gray
-                .to(".stat-card", { backgroundColor: "#1e1e1e", ease: "none" }, "<")
+                .to(".stat-card-new", { backgroundColor: "transparent", ease: "none" }, "<")
                 .to(".team-card", { backgroundColor: "#1e1e1e", ease: "none" }, "<")
-                // Stat Text to White (initial state is gray-800)
-                .to(".stat-text", { color: "#ffffff", ease: "none" }, "<");
+                .to(".stat-text", { color: "#9ca3af", ease: "none" }, "<")
+                // Divider to a clearly visible color on black
+                .to("#stat-divider", { backgroundColor: "#666666", opacity: 1, ease: "none" }, "<");
 
             ScrollTrigger.refresh();
         });
